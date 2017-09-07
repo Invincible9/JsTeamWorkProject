@@ -34,6 +34,8 @@ module.exports = (app) => {
   app.get('/deletePart/:id', auth.isAuthenticated, controllers.parts.deletePartByIdGET)
   app.post('/deletePart/:id', auth.isAuthenticated, controllers.parts.deletePartByIdPOST)
 
+  app.post('/addComment/:id', auth.isAuthenticated, controllers.comments.addCommentPOST);
+
 
   app.all('*', (req, res) => {
     res.status(404)

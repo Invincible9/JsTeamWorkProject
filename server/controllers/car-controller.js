@@ -62,6 +62,7 @@ module.exports = {
         Car
             .findById(carId)
             .populate('author')
+            .populate('comments')
             .then(car => {
                 res.render('cars/carDetail', {
                     car: car

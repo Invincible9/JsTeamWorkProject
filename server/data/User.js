@@ -12,7 +12,8 @@ let userSchema = new mongoose.Schema({
   hashedPass: String,
   roles: [String],
   carAds: [{type: ObjectId, ref: 'Car'}],
-  partAds: [{type: ObjectId, ref: 'Part'}]
+  partAds: [{type: ObjectId, ref: 'Part'}],
+  comments: [{type: ObjectId, ref: 'Comment'}]
 })
 
 userSchema.method({
