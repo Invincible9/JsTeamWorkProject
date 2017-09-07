@@ -1,0 +1,75 @@
+<h1>Create Advetise for Car</h1>
+
+<div class="container-fluid">
+    <div class="jumbotron">
+        <form action="/createAdCar" method="POST">
+            <div class="form-group">
+                <label for="model">Model:</label>
+                <input class="form-control" type="text" name="model" placeholder="model" required="required" /><br />
+            </div>
+            <div class="form-group">
+                <label for="price">Price:</label>
+                <input class="form-control" type="number" min="0" name="price" placeholder="price" required="required"/><br />
+            </div>
+            <div class="form-group">
+                <label for="distanceTraveled">Distance Traveled:</label>
+                <input class="form-control" type="number" min="0" name="distanceTraveled" placeholder="distanceTraveled" required="required"/><br />
+            </div>
+
+            <div class="form-group">
+                <label for="dateOfManufacture">Date of Manufacture:</label>
+                <input class="form-control" type="text" name="dateOfManufacture" placeholder="dateOfManufacture" required="required"/><br />
+            </div>
+
+            <!--engine-->
+            <div class="form-group">
+                <label for="engine">Engine:</label>
+                <select class="form-control" name="engine">
+                    <option value="gasoline" selected="selected">Gasoline</option>
+                    <option value="diesel">Diesel</option>
+                    <option value="methane">Methane</option>
+                    <option value="gas">Gas</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <!--power-->
+            <div class="form-group">
+                <label for="power">Power:</label>
+                <input class="form-control" type="text" name="power" placeholder="power" required="required"/><br />
+            </div>
+
+            <!--transmission-->
+            <div class="form-group">
+                <label for="transmission">Transmission:</label>
+                <select class="form-control" name="transmission">
+                    <option value="manual">Manual</option>
+                    <option value="auto" selected="selected">Auto</option>
+                    <option value="other" selected="selected">Other</option>
+                </select>
+            </div>
+
+            <!--color-->
+            <div class="form-group">
+                <label for="color">Color:</label>
+                <input class="form-control" type="text" name="color" placeholder="color" required="required"/><br />
+            </div>
+
+            <!--pictureURL-->
+            <div class="form-group">
+                <label for="pictureURL">Picture URL:</label>
+                <input class="form-control" type="url" name="pictureURL" placeholder="pictureURL" required="required"/><br />
+            </div>
+
+            <!--location-->
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <input class="form-control" type="text" name="location" placeholder="location" required="required"/><br />
+            </div>
+
+            <input class="btn btn-default" type="submit" value="Create Advertise" />
+            <input class="btn btn-warning" type="reset" value="Clear" />
+        </form>
+
+    </div>
+</div>
