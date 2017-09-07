@@ -2,44 +2,53 @@
 
 <div class="container-fluid">
     <div class="jumbotron">
-        <form action="/createAdPart" method="POST">
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input class="form-control" type="text" name="name" placeholder="Name" / required="required" />
+    <form action="/createAdPart" method="POST">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input class="form-control" type="text" name="name" placeholder="Name" / required="required" />
+        
+        </div>
+        <div class="form-group">
+            <label for="price">Price:</label> 
+            <input class="form-control" type="number" min="0" name="price" placeholder="Price" required="required" /><br />
+        </div>
 
-            </div>
-            <div class="form-group">
-                <label for="price">Price:</label>
-                <input class="form-control" type="number" min="0" name="price" placeholder="Price" required="required" /><br />
-            </div>
+        <div class="form-group">
+            <label for="condition">Condition:</label>
+           <select class="form-control" name="condition">
+               <option value="new">New</option>
+               <option value="second hand">Second Hand</option>
+           </select>
+           <br />
+        </div>
 
-            <div class="form-group">
-                <label for="condition">Condition:</label>
-                <select class="form-control" name="condition">
-                    <option value="new">New</option>
-                    <option value="second hand">Second Hand</option>
-                </select>
-                <br />
-            </div>
+           <div class="form-group">
+            <label for="availability">Availability:</label>
+            <select class="form-control" name="availability">
+                <option value="yes">YES</option>
+                <option value="no">NO</option>
+            </select>
+            {{!-- <input class="form-control" type="text" name="availability" placeholder="Availability" required="required" /><br /> --}}
+        </div>
 
-            <div class="form-group">
-                <label for="availability">Availability:</label>
-                <input class="form-control" type="text" name="availability" placeholder="Availability" required="required" /><br />
-            </div>
+           <div class="form-group">
+            <label for="pictureURL">Picture URL:</label>
+            <input class="form-control" type="url" name="pictureURL" placeholder="pictureURL" required="required" /><br />
+        </div>
 
-            <div class="form-group">
+             <div class="form-group">
                 <label for="location">Location:</label>
-                <input class="form-control" type="text" name="location" placeholder="location" required="required" /><br />
+                <input class="form-control" type="text" name="location" placeholder="location" required="required"/><br />
             </div>
 
-            <div class="form-group">
-                <label for="pictureURL">Picture URL:</label>
-                <input class="form-control" type="url" name="pictureURL" placeholder="pictureURL" required="required" /><br />
-            </div>
+           <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea class="form-control" name="description" rows="5" cols="40" placeholder="description"></textarea>
+            </div>    
 
-            <input class="btn btn-default" type="submit" value="Create Advertise" />
-            <input class="btn btn-warning" type="reset" value="Clear" />
-        </form>
+        <input class="btn btn-default" type="submit" value="Create Advertise" />
+        <input class="btn btn-warning" type="reset" value="Clear" />
+    </form>
 
     </div>
 </div>

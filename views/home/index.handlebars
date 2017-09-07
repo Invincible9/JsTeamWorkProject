@@ -19,8 +19,8 @@
 			<div class="fh5co-box">
 				<h3 class="heading">Categories</h3>
 				<ul>
+					<li><a href="/listAllParts">Parts</a></li>
 					<li><a href="/">Cars</a></li>
-					<li><a href="listAllParts">Parts</a></li>
 					<li><a href="#">Photography</a></li>
 					<li><a href="#">Food &amp; Drinks</a></li>
 					<li><a href="#">Culture</a></li>
@@ -60,19 +60,25 @@
 	<!-- END #fh5co-header -->
 	<div class="container-fluid">
 		<div class="row fh5co-post-entry">
-            {{#each cars}}
+			{{#each cars}}
 			<article class="col-lg-3 col-md-3 col-sm-3 col-xs-6 col-xxs-12 animate-box">
 				<figure>
-					<a href="single.html"><img src="{{pictureURL}}" alt="{{model}}" class="img-responsive"></a>
+					<a href="/cars/{{_id}}"><img src="{{pictureURL}}" alt="{{model}}" class="img-responsive"></a>
 				</figure>
 				<span class="fh5co-meta"><a href="single.html">{{location}}</a></span>
-				<h2 class="fh5co-article-title"><a href="single.html">{{model}} {{price}}$</a></h2>
+				<h2 class="fh5co-article-title"><a href="single.html">{{model}}  {{price}}$ </a></h2>
 				<span class="fh5co-meta fh5co-date">{{date}}</span>
+						{{#if ../isAdmin}}
+						<a class="btn btn-default" href="/editCar/{{_id}}">EDIT</a>
+						<a class="btn btn-danger" href="#">DELETE</a>
+						<a class="btn btn-primary" href="/cars/{{_id}}">DETAILS</a>
+				{{else}}
+					<a class="btn btn-primary" href="/cars/{{_id}}">DETAILS</a>
+				{{/if}}
 			</article>
-           {{/each}}
+		{{/each}}	
 
 			<div class="clearfix visible-xs-block"></div>
-
 		</div>
 	</div>
 

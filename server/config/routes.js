@@ -2,7 +2,6 @@ const controllers = require('../controllers')
 const auth = require('../config/auth')
 
 module.exports = (app) => {
-  // app.use(upload())
   app.get('/', controllers.home.index)
   app.get('/about', controllers.home.about)
 
@@ -12,16 +11,20 @@ module.exports = (app) => {
   app.post('/users/login', controllers.users.loginPost)
   app.post('/users/logout', controllers.users.logout)
 
-  app.get('/createAdCar', auth.isAuthenticated, controllers.cars.createAdCarGet)
-  app.post('/createAdCar', auth.isAuthenticated, controllers.cars.createAdCarPost)
+  app.get('/createAdCar', auth.isAuthenticated, controllers.cars.createAdCarGET)
+  app.post('/createAdCar', auth.isAuthenticated, controllers.cars.createAdCarPOST)
 
-  app.get('/createAdPart', auth.isAuthenticated, controllers.parts.createAdPartGet)
-  app.post('/createAdPart', auth.isAuthenticated, controllers.parts.createAdPartPost)
+  app.get('/createAdPart', auth.isAuthenticated, controllers.parts.createAdPartGET)
+  app.post('/createAdPart', auth.isAuthenticated, controllers.parts.createAdPartPOST)
 
-  app.get('/listAllParts', controllers.parts.listAllPartsGet);
+  app.get('/listAllParts', controllers.parts.listAllPartsGET)
 
-  app.get('/picture', controllers.parts.uploadPictureGet);
-  app.post('/picture', controllers.parts.uploadPicturePost);
+  app.get('/cars/:id', auth.isAuthenticated, controllers.cars.getCarById )
+  app.get('/parts/:id', auth.isAuthenticated, controllers.parts.getPartById)
+
+  app.get('/editCar/:id', auth.isAuthenticated, controllers.cars.editCarByIdGET)
+  app.post('/editCar/:id', auth.isAuthenticated, controllers.cars.editCarByIdPOST)
+
 
 
   app.all('*', (req, res) => {

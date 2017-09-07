@@ -1,24 +1,26 @@
-<h1>Create Advetise for Car</h1>
+<h1>Edit Advetise for Car</h1>
+
 
 <div class="container-fluid">
     <div class="jumbotron">
-        <form action="/createAdCar" method="POST">
+        <p><img src="{{car.pictureURL}}" alt="{{car.model}}" /></p>
+        <form action="/editCar/{{car._id}}" method="POST">
             <div class="form-group">
                 <label for="model">Model:</label>
-                <input class="form-control" type="text" name="model" placeholder="model" required="required" /><br />
+                <input class="form-control" type="text" name="model" placeholder="model" required="required" value="{{car.model}}" /><br />
             </div>
             <div class="form-group">
                 <label for="price">Price:</label>
-                <input class="form-control" type="number" min="0" name="price" placeholder="price" required="required"/><br />
+                <input class="form-control" type="number" min="0" name="price" placeholder="price" required="required" value="{{car.price}}"/><br />
             </div>
             <div class="form-group">
                 <label for="distanceTraveled">Distance Traveled:</label>
-                <input class="form-control" type="number" min="0" name="distanceTraveled" placeholder="distanceTraveled" required="required"/><br />
+                <input class="form-control" type="number" min="0" name="distanceTraveled" placeholder="distanceTraveled" required="required" value="{{car.distanceTraveled}}"/><br />
             </div>
 
             <div class="form-group">
                 <label for="dateOfManufacture">Date of Manufacture:</label>
-                <input class="form-control" type="text" name="dateOfManufacture" placeholder="dateOfManufacture" required="required"/><br />
+                <input class="form-control" type="text" name="dateOfManufacture" placeholder="dateOfManufacture" required="required" value="{{car.dateOfManufacture}}"/><br />
             </div>
 
             <!--engine-->
@@ -36,7 +38,7 @@
             <!--power-->
             <div class="form-group">
                 <label for="power">Power:</label>
-                <input class="form-control" type="text" name="power" placeholder="power" required="required"/><br />
+                <input class="form-control" type="text" name="power" placeholder="power" required="required" value="{{car.power}}"/><br />
             </div>
 
             <!--transmission-->
@@ -52,27 +54,27 @@
             <!--color-->
             <div class="form-group">
                 <label for="color">Color:</label>
-                <input class="form-control" type="text" name="color" placeholder="color" required="required"/><br />
+                <input class="form-control" type="text" name="color" placeholder="color" required="required" value="{{car.color}}"/><br />
             </div>
 
             <!--pictureURL-->
             <div class="form-group">
                 <label for="pictureUrl">Picture URL:</label>
-                <input class="form-control" type="url" name="pictureUrl" placeholder="pictureUrl" required="required"/><br />
+                <input class="form-control" type="url" name="pictureUrl" placeholder="pictureUrl" required="required"/ value="{{car.pictureURL}}"><br />
             </div>
 
             <!--location-->
             <div class="form-group">
                 <label for="location">Location:</label>
-                <input class="form-control" type="text" name="location" placeholder="location" required="required"/><br />
+                <input class="form-control" type="text" name="location" placeholder="location" required="required" value="{{car.location}}"/><br />
             </div>
 
              <div class="form-group">
                 <label for="description">Description:</label>
-                <textarea class="form-control" name="description" rows="5" cols="40" placeholder="description"></textarea>
+                <textarea class="form-control" name="description" rows="5" cols="40" placeholder="description">{{car.description}}</textarea>
             </div>
 
-            <input class="btn btn-default" type="submit" value="Create Advertise" />
+            <input class="btn btn-default" type="submit" value="Save Changes" />
               <input class="btn btn-warning" type="reset" value="Clear" />
         </form>
 

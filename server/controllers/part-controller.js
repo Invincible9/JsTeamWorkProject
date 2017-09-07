@@ -1,62 +1,68 @@
-const mongoose = require('mongoose');
-const Part = mongoose.model('Part');
-const upload = require('express-fileupload');
-const express = require('express');
-const bodyParser = require("body-parser");
-const path = require('path');
-
-let server = express();
-
-server.use(bodyParser.urlencoded({extended:false}));
-server.use(bodyParser.json());
-server.use(upload());
+const mongoose = require('mongoose')
+const Part = mongoose.model('Part')
 
 module.exports = {
-
-    uploadPictureGet:(req, res) => {
-        res.render("pictures/picture");
-        // res.sendFile(__dirname + "/picture.handlebars");
-        console.log(res);
+    createAdPartGET: (req, res) => {
+        res.render('parts/createAdPart')
     },
 
-    uploadPicturePost:(req,res) => {
-        if(req.files){
-            console.log(req.files);
-        }
+    createAdPartPOST: (req, res) => {
+        let reqBody = req.body
+        let partName = reqBody.name
+        let partPrice = reqBody.price
+        let partCondition = reqBody.condition
+        let partAvailability = reqBody.availability
+        let partPictureURL = reqBody.pictureURL
+        let partLocation = reqBody.location
+        let partDescription = reqBody.description
+        let partAuthor = res.locals.currentUser.id
+
+        Part
+            .create({
+                name: partName,
+                price: partPrice,
+                condition: partCondition,
+                availability: partAvailability,
+                pictureURL: partPictureURL,
+                date: Date.now(),
+                location: partLocation,
+                author: partAuthor,
+                description: partDescription
+            })
+           .then(partAdvert => {
+
+            User
+            .findById(partAuthor)
+            .then(author => {
+                author.partAds.push(partAdvert.id)
+                author.save()
+            })                
+
+           })
+        
+        res.redirect('/')
     },
 
-
-    listAllPartsGet:(req, res) =>{
-        Part.find({}).then(parts => {
-            res.render("parts/listAllParts", {parts:parts})
-        })
+    listAllPartsGET: (req, res) => {
+        Part
+            .find({})
+            .then(parts => {
+                res.render('parts/listAllParts', {
+                    parts: parts
+                })
+            })
     },
 
-    createAdPartGet:(req, res) => {
-        res.render('parts/createAdPart');
-    },
+    getPartById: (req, res) => {
+        let partId = req.params.id
 
-    createAdPartPost:(req, res) => {
-        let reqBody = req.body;
-
-        let partName = reqBody.name;
-        let partPrice = reqBody.price;
-        let partCondition = reqBody.condition;
-        let partAvailability = reqBody.availability;
-        let partPictureURL = reqBody.pictureURL;
-        let partLocation = reqBody.location;
-
-        Part.create({
-            name: partName,
-            price: partPrice,
-            condition: partCondition,
-            availability: partAvailability,
-            pictureURL: partPictureURL,
-            location: partLocation,
-            date: Date.now()
-        }).then(
-            res.redirect('/')
-        )
+        Part
+            .findById(partId)
+            .populate('author')
+            .then(part => {
+                res.render('parts/partDetail', {
+                    part: part
+                })
+            })
     }
-
 }
