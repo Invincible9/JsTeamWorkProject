@@ -1,3 +1,17 @@
+<header>
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <!-- jQuery -->
+    <script src="/js/jquery.min.js"></script>
+    <!-- jQuery Easing -->
+    <script src="/js/jquery.easing.1.3.js"></script>
+    <!-- Bootstrap -->
+    <script src="/js/bootstrap.min.js"></script>
+    <!-- Waypoints -->
+    <script src="/js/jquery.waypoints.min.js"></script>
+    <!-- Main JS -->
+    <script src="/js/main.js"></script>
+</header>
+
 <body>
 <div id="fh5co-offcanvas">
     <a href="#" class="fh5co-close-offcanvas js-fh5co-close-offcanvas"><span><i
@@ -115,7 +129,6 @@
                     <div class="col-md-12 animate-box">
                         <blockquote>
                             <p>&ldquo;{{car.description}} &rdquo; <cite>&mdash; {{car.author.username}}</cite></p>
-                            {{!-- <p>&ldquo;She packed her seven versalia, put her initial into the belt and made herself on the way. When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove &rdquo; <cite>&mdash; Jean Smith</cite></p> --}}
                         </blockquote>
                     </div>
                 </div>
@@ -123,42 +136,34 @@
                 <div class="row rp-b">
                     <div class="col-md-12 animate-box">
                         <blockquote>
-                            <p>{{comments}}</cite></p>
-                            {{!-- <p>&ldquo;She packed her seven versalia, put her initial into the belt and made herself on the way. When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove &rdquo; <cite>&mdash; Jean Smith</cite></p> --}}
+                            {{#each car.comments}}
+                                <p>&ldquo;{{this.comment}} &rdquo; <cite>&mdash; {{this.name}}</cite></p>
+                            {{/each}}
                         </blockquote>
                     </div>
                 </div>
 
+                <button class="btn btn-success" id="btnForm">Add Comment</button>
+
                 <div class="row rp-b">
                     <div class="col-lg-12 col-md-12 animate-box" id="commentForm">
 
-                        <!--<button id="commentForm">Add Comment</button>-->
-                        <!--<script>-->
+                        <script>
+                            let form = $(`
+                            <form class="form-group" method="post" action="/addCarComment/{{car._id}}">
+                                <label for="comment">Comment:</label>
+                                <textarea class="form-control" name="comment" id="comment" rows="5" required="required"></textarea><br/>
+                                <input class="btn btn-info" type="submit" value="Add Comment"/>
+                            </form>`);
 
-                            <!--$('#commentForm').click(function () {-->
-                                <!--alert('hi');-->
-                            <!--})-->
+                            $('#commentForm').append(form);
+                            $('#commentForm').hide();
 
-                            <!--$('#commentForm').toggle(function () {-->
+                            $('#btnForm').on('click', function () {
+                                $('#commentForm').toggle();
+                            });
 
-                                <!--let formComment = $(`-->
-                        <form class="form-group" method="post" action="/addComment/{{car._id}}">
-                            <label for="comment">Comment:</label>
-                            <textarea class="form-control" name="comment" id="comment" rows="5"></textarea><br/>
-                            <input class="btn btn-info" type="submit" value="Add Comment"/>
-                        </form>
-                    <!--`);-->
-
-                                <!--$('#commentForm').append(formComment);-->
-
-                            <!--});-->
-
-                            <!--<div class="col-lg-6 col-md-12 cp-l animate-box">-->
-                            <!--{{!-- <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar. The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text didn’t listen. </p>-->
-
-							<!--<p>She packed her seven versalia, put her initial into the belt and made herself on the way. When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>-->
-
-							<!--<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large <a href="#">language</a> ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p> --}}-->
+                        </script>
 
                     </div>
                 </div>
@@ -223,16 +228,6 @@
     </p>
 </footer>
 
-<!-- jQuery -->
-<script src="/js/jquery.min.js"></script>
-<!-- jQuery Easing -->
-<script src="/js/jquery.easing.1.3.js"></script>
-<!-- Bootstrap -->
-<script src="/js/bootstrap.min.js"></script>
-<!-- Waypoints -->
-<script src="/js/jquery.waypoints.min.js"></script>
-<!-- Main JS -->
-<script src="/js/main.js"></script>
 
 </body>
     

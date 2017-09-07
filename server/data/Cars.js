@@ -13,7 +13,7 @@ let carSchema = new mongoose.Schema({
     pictureURL: {type: String},
     location: {type: String},
     date: {type: Date, default: Date.now},
-    comments: {type: ObjectId, ref: 'Comment'},
+    comments: [{type: ObjectId, ref: 'Comment'}],
     author: {type: ObjectId, ref: 'User'},
     description: {type: String} 
 })

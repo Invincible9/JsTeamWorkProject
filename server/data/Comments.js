@@ -3,6 +3,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 let commentsSchema = new mongoose.Schema({
     author: { type: ObjectId, required: true},
+    name: {type: String},
     comment: { type: String, required: true},
     date: { type: Date, default: Date.now}
 })

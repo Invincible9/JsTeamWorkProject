@@ -85,9 +85,11 @@ module.exports = {
         Part
             .findById(partId)
             .populate('author')
+            .populate('comments')
             .then(part => {
+
                 res.render('parts/partDetail', {
-                    part: part
+                    part:part
                 })
             })
     },

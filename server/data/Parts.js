@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const ObjectId =  mongoose.Schema.Types.ObjectId
+const ObjectId =  mongoose.Schema.Types.ObjectId;
 
 let partSchema = new mongoose.Schema({
     name: {type: String},
@@ -7,7 +7,7 @@ let partSchema = new mongoose.Schema({
     condition: {type: String},
     availability: {type: String},
     pictureURL: {type: String},
-    comments: {type: ObjectId, ref: 'Comment'},
+    comments: [{type: ObjectId, ref: 'Comment'}],
     date: {type: Date, default: Date.now},
     location: {type: String},
     author: {type: ObjectId, ref: 'User'},

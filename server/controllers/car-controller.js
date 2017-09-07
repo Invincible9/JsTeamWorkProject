@@ -57,21 +57,22 @@ module.exports = {
     },
 
     getCarById: (req, res) => {
-        let carId = req.params.id
+        let carId = req.params.id;
 
         Car
             .findById(carId)
-            .populate('author')
             .populate('comments')
+            .populate('author')
             .then(car => {
                 res.render('cars/carDetail', {
                     car: car
                 })
             })
+
     },
 
     editCarByIdGET: (req, res) => {
-        let carId = req.params.id
+        let carId = req.params.id;
 
         Car
             .findById(carId)
