@@ -91,6 +91,12 @@
                     {{/if}}
                 {{/if}}
 
+                {{#if ../isAdmin}}
+                        <a class="btn btn-success" href="/editCar/{{_id}}">EDIT</a>
+                        <a class="btn btn-primary" href="/cars/{{_id}}">DETAILS</a>
+                        <a class="btn btn-danger" href="/deleteCar/{{_id}}">DELETE</a>
+                {{/if}}
+
             </article>
         {{/each}}
 

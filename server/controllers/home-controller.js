@@ -21,10 +21,10 @@ module.exports = {
         for(let car of cars){
 
           if(car.author == currentUser){
-            rightToChangePost = true
+            rightToChangePost = true;
             car.rightToChangePost = rightToChangePost
           }else{
-            rightToChangePost = false
+            rightToChangePost = false;
             car.rightToChangePost = rightToChangePost
           }
         }
