@@ -3,7 +3,7 @@ const Car = mongoose.model('Car')
 const User = mongoose.model('User')
 
 module.exports = {
-    createAdCarGET: (req, res) =>{
+    createAdCarGET: (req, res) => {
         res.render('cars/createAdCar')
     },
 
@@ -43,17 +43,16 @@ module.exports = {
             .then(carAdvert => {
 
                 User
-                .findById(adAuthor)
-                .then(author => {
-                    author.carAds.push(carAdvert.id)
-                    author.save()
-                })                
-                
-                
-                
+                    .findById(adAuthor)
+                    .then(author => {
+                        author.carAds.push(carAdvert.id)
+                        author.save()
+                    })
+
+
             })
-            
-            res.redirect('/')
+
+        res.redirect('/')
 
     },
 
@@ -85,7 +84,7 @@ module.exports = {
     editCarByIdPOST: (req, res) => {
         let carId = req.params.id
         let reqBody = req.body
-        
+
         let carModelUpdated = reqBody.model
         let carPriceUpdated = reqBody.price
         let carDistanceTravelledUpdated = reqBody.distanceTraveled
@@ -103,22 +102,47 @@ module.exports = {
             .findById(carId)
             .then(car => {
                 car.model = carModelUpdated,
-                car.price = carPriceUpdated,
-                car.distanceTraveled = carDistanceTravelledUpdated,
-                car.dateOfManufacture = carDateOfManufactureUpdated,
-                car.engine = carEngineUpdated,
-                car.power = carPowerUpdated,
-                car.transmission = carTransmissionUpdated,
-                car.color = carColorUpdated,
-                car.pictureURL = carPictureUpdated,
-                car.location = carLocationUpdated,
-                car.date =Date.now(),
-                car.author = adAuthorUpdated,
-                car.description = carDescriptionUpdated
+                    car.price = carPriceUpdated,
+                    car.distanceTraveled = carDistanceTravelledUpdated,
+                    car.dateOfManufacture = carDateOfManufactureUpdated,
+                    car.engine = carEngineUpdated,
+                    car.power = carPowerUpdated,
+                    car.transmission = carTransmissionUpdated,
+                    car.color = carColorUpdated,
+                    car.pictureURL = carPictureUpdated,
+                    car.location = carLocationUpdated,
+                    car.date = Date.now(),
+                    car.author = adAuthorUpdated,
+                    car.description = carDescriptionUpdated
                 car.save()
 
                 res.redirect('/')
             })
+    },
+
+    deleteCarByIdGET: (req, res) => {
+        let carId = req.params.id;
+
+        Car.findById(carId).then(car => {
+            res.render('cars/deleteCar', {car: car});
+        })
+    },
+
+    deleteCarByIdPOST: (req, res) => {
+        let carId = req.params.id;
+
+        Car.findByIdAndRemove(carId)
+            .then(car => {
+                let author = car.author;
+
+                User.findById(author).then(author => {
+                    let index = author.carAds.indexOf(carId);
+                    author.carAds.splice(index, 1);
+                    author.save();
+
+                    res.redirect('/')
+                });
+            });
     }
 
 

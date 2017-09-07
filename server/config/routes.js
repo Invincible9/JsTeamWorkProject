@@ -25,6 +25,14 @@ module.exports = (app) => {
   app.get('/editCar/:id', auth.isAuthenticated, controllers.cars.editCarByIdGET)
   app.post('/editCar/:id', auth.isAuthenticated, controllers.cars.editCarByIdPOST)
 
+  app.get('/deleteCar/:id', auth.isAuthenticated, controllers.cars.deleteCarByIdGET)
+  app.post('/deleteCar/:id', auth.isAuthenticated, controllers.cars.deleteCarByIdPOST)
+
+  app.get('/editPart/:id', auth.isAuthenticated, controllers.parts.editPartByIdGET)
+  app.post('/editPart/:id', auth.isAuthenticated, controllers.parts.editPartByIdPOST)
+
+  app.get('/deletePart/:id', auth.isAuthenticated, controllers.parts.deletePartByIdGET)
+  app.post('/deletePart/:id', auth.isAuthenticated, controllers.parts.deletePartByIdPOST)
 
 
   app.all('*', (req, res) => {

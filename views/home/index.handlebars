@@ -65,16 +65,25 @@
 				<figure>
 					<a href="/cars/{{_id}}"><img src="{{pictureURL}}" alt="{{model}}" class="img-responsive"></a>
 				</figure>
-				<span class="fh5co-meta"><a href="single.html">{{location}}</a></span>
-				<h2 class="fh5co-article-title"><a href="single.html">{{model}}  {{price}}$ </a></h2>
+				<span class="fh5co-meta"><a href="/cars/{{_id}}">{{location}}</a></span>
+				<h2 class="fh5co-article-title"><a href="/cars/{{_id}}">{{model}}  {{price}}$ </a></h2>
 				<span class="fh5co-meta fh5co-date">{{date}}</span>
-						{{#if ../isAdmin}}
-						<a class="btn btn-default" href="/editCar/{{_id}}">EDIT</a>
-						<a class="btn btn-danger" href="#">DELETE</a>
+
+				{{#if ../currentUser}}
+					{{#if ./rightToChangePost}}
+						<a class="btn btn-success" href="/editCar/{{_id}}">EDIT</a>
 						<a class="btn btn-primary" href="/cars/{{_id}}">DETAILS</a>
-				{{else}}
-					<a class="btn btn-primary" href="/cars/{{_id}}">DETAILS</a>
+						<a class="btn btn-danger" href="/deleteCar/{{_id}}">DELETE</a>
+					{{/if}}
 				{{/if}}
+
+						{{!-- {{#if ../isAdmin}}
+						{{!-- <a class="btn btn-default" href="/editCar/{{_id}}">EDIT</a> --}}
+						{{!-- <a class="btn btn-danger" href="#">DELETE</a> --}}
+						{{!-- <a class="btn btn-primary" href="/cars/{{_id}}">DETAILS</a> --}}
+				{{!-- {{else}} --}}
+					{{!-- <a class="btn btn-primary" href="/cars/{{_id}}">DETAILS</a> --}}
+				{{!-- {{/if}} --}} 
 			</article>
 		{{/each}}	
 
