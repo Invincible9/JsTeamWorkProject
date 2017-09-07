@@ -13,7 +13,6 @@ module.exports = {
         let partPrice = reqBody.price
         let partCondition = reqBody.condition
         let partAvailability = reqBody.availability
-        let partPictureURL = reqBody.pictureURL
         let partLocation = reqBody.location
         let partDescription = reqBody.description
         let partAuthor = res.locals.currentUser.id
@@ -24,22 +23,29 @@ module.exports = {
                 price: partPrice,
                 condition: partCondition,
                 availability: partAvailability,
-                pictureURL: partPictureURL,
                 date: Date.now(),
                 location: partLocation,
                 author: partAuthor,
                 description: partDescription
             })
             .then(partAdvert => {
+                let partImagePath = `./public/images/partPictures/${partAdvert.id}`;
+                let picture = req.files.pictureURL;
+                
+                Part.findByIdAndUpdate(partAdvert.id, {$set: {pictureURL: partImagePath}}).then(() => {
+                    console.log(picture);console.log(partImagePath)
+                    picture.mv(partImagePath, err => {
+                        if (err) {
+                            console.log(err.message);
+                        }
+                    });
 
-                User
-                    .findById(partAuthor)
-                    .then(author => {
+                    User.findById(partAuthor).then(author => {
                         author.partAds.push(partAdvert.id)
                         author.save()
-                    })
-
-            })
+                    });
+                });
+            });
 
         res.redirect('/listAllParts')
     },
@@ -106,11 +112,24 @@ module.exports = {
         let partId = req.params.id;
         let body = req.body;
 
+        let picture = req.files.pictureURL;
+        
+        let partPictureUpdated;
+        if (picture) {
+            let partImagePath = `./public/images/PartPictures/${partId}`;
+            picture.mv(partImagePath, err => {
+                if (err) {
+                    console.log(err.message);
+                }
+                partPictureUpdated = partImagePath;
+            });
+        }
+        
+
         let partName = body.name;
         let partPrice = body.price;
         let partCondition = body.condition;
         let partAvailability = body.availability;
-        let partPictureURL = body.pictureURL;
         let partLocation = body.location;
         let partAuthor = res.locals.currentUser.id;
         let partDescription = body.description;
@@ -120,7 +139,7 @@ module.exports = {
                 part.price = partPrice,
                 part.condition = partCondition,
                 part.availability = partAvailability,
-                part.pictureURL = partPictureURL,
+                part.pictureURL = partPictureUpdated || part.pictureURL,
                 part.location = partLocation,
                 part.author = partAuthor,
                 part.description = partDescription

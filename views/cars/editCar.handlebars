@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="jumbotron">
         <p><img src="{{car.pictureURL}}" alt="{{car.model}}" /></p>
-        <form action="/editCar/{{car._id}}" method="POST">
+        <form action="/editCar/{{car._id}}" enctype="multipart/form-data" method="POST">
             <div class="form-group">
                 <label for="model">Model:</label>
                 <input class="form-control" type="text" name="model" placeholder="model" required="required" value="{{car.model}}" /><br />
@@ -59,8 +59,8 @@
 
             <!--pictureURL-->
             <div class="form-group">
-                <label for="pictureUrl">Picture URL:</label>
-                <input class="form-control" type="url" name="pictureUrl" placeholder="pictureUrl" required="required"/ value="{{car.pictureURL}}"><br />
+                <label for="pictureUrl">Picture:</label>
+                <input class="form-control" type="file" name="pictureUrl" required="required"><br />
             </div>
 
             <!--location-->

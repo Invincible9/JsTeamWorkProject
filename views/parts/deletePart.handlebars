@@ -2,7 +2,7 @@
 
 <div class="container-fluid">
     <div class="jumbotron">
-        <p><img src="{{part.pictureURL}}" alt="{{part.name}}" /></p>
+        <p><img src="/images/PartPictures/{{part._id}}" alt="{{part.name}}" /></p>
         <form action="/deletePart/{{part._id}}" method="POST">
             <div class="form-group">
                 <label for="name">Name:</label>
@@ -32,8 +32,8 @@
             </div>
 
             <div class="form-group">
-                <label for="pictureURL">Picture URL:</label>
-                <input class="form-control" disabled="disabled" type="url" name="pictureURL" placeholder="pictureURL" required="required" value="{{part.pictureURL}}" /><br />
+                <label for="pictureURL">Picture:</label>
+                <input class="form-control" disabled="disabled" type="file" name="pictureURL" required="required" /><br />
             </div>
 
             <div class="form-group">

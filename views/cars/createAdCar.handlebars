@@ -2,7 +2,7 @@
 
 <div class="container-fluid">
     <div class="jumbotron">
-        <form action="/createAdCar" method="POST">
+        <form action="/createAdCar" enctype="multipart/form-data" method="POST">
             <div class="form-group">
                 <label for="model">Model:</label>
                 <input class="form-control" type="text" name="model" placeholder="model" required="required" /><br />
@@ -57,8 +57,8 @@
 
             <!--pictureURL-->
             <div class="form-group">
-                <label for="pictureUrl">Picture URL:</label>
-                <input class="form-control" type="url" name="pictureUrl" placeholder="pictureUrl" required="required"/><br />
+                <label for="pictureUrl">Picture:</label>
+                <input class="form-control" type="file" accept=".jpg, .jpeg, .png" name="pictureUrl" required="required"/><br />
             </div>
 
             <!--location-->

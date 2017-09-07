@@ -18,11 +18,9 @@ module.exports = {
         let carPower = reqBody.power
         let carTransmission = reqBody.transmission
         let carColor = reqBody.color
-        let carPicture = reqBody.pictureUrl
         let carLocation = reqBody.location
         let carDescription = reqBody.description
         let adAuthor = res.locals.currentUser.id
-
 
         Car
             .create({
@@ -34,26 +32,31 @@ module.exports = {
                 power: carPower,
                 transmission: carTransmission,
                 color: carColor,
-                pictureURL: carPicture,
                 location: carLocation,
                 date: Date.now(),
                 author: adAuthor,
                 description: carDescription
             })
             .then(carAdvert => {
+                let carImagePath = `./public/images/CarPictures/${carAdvert.id}`;
+                let picture = req.files.pictureUrl;
+                
+                Car.findByIdAndUpdate(carAdvert.id, {$set: {pictureURL: carImagePath}}).then(() => {
+                    picture.mv(carImagePath, err => {
+                        if (err) {
+                            console.log(err.message);
+                        }
+                    });
 
-                User
-                    .findById(adAuthor)
-                    .then(author => {
+                    User.findById(adAuthor).then(author => {
                         author.carAds.push(carAdvert.id)
                         author.save()
-                    })
+                    });
 
-
-            })
+                });
+            });
 
         res.redirect('/')
-
     },
 
     getCarById: (req, res) => {
@@ -87,6 +90,20 @@ module.exports = {
         let carId = req.params.id
         let reqBody = req.body
 
+        
+        let picture = req.files.pictureUrl;
+
+        let carPictureUpdated;
+        if (picture) {
+            let carImagePath = `./public/images/CarPictures/${carId}`;
+            picture.mv(carImagePath, err => {
+                if (err) {
+                    console.log(err.message);
+                }
+                carPictureUpdated = carImagePath;
+            });
+        }
+
         let carModelUpdated = reqBody.model
         let carPriceUpdated = reqBody.price
         let carDistanceTravelledUpdated = reqBody.distanceTraveled
@@ -95,7 +112,6 @@ module.exports = {
         let carPowerUpdated = reqBody.power
         let carTransmissionUpdated = reqBody.transmission
         let carColorUpdated = reqBody.color
-        let carPictureUpdated = reqBody.pictureUrl
         let carLocationUpdated = reqBody.location
         let carDescriptionUpdated = reqBody.description
         let adAuthorUpdated = res.locals.currentUser.id
@@ -111,9 +127,9 @@ module.exports = {
                     car.power = carPowerUpdated,
                     car.transmission = carTransmissionUpdated,
                     car.color = carColorUpdated,
-                    car.pictureURL = carPictureUpdated,
+                    car.pictureURL = carPictureUpdated || car.pictureURL,
                     car.location = carLocationUpdated,
-                    car.date = Date.now(),
+                    car.date = Date.now();
                     car.author = adAuthorUpdated,
                     car.description = carDescriptionUpdated
                 car.save()
