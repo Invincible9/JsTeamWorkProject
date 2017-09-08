@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Part = mongoose.model('Part')
 const User = mongoose.model('User')
+const fs = require('fs');
 
 module.exports = {
     createAdPartGET: (req, res) => {
@@ -33,7 +34,8 @@ module.exports = {
                 let picture = req.files.pictureURL;
                 
                 Part.findByIdAndUpdate(partAdvert.id, {$set: {pictureURL: partImagePath}}).then(() => {
-                    console.log(picture);console.log(partImagePath)
+                    // console.log(picture);
+                    // console.log(partImagePath)
                     picture.mv(partImagePath, err => {
                         if (err) {
                             console.log(err.message);
@@ -165,6 +167,14 @@ module.exports = {
         Part.findByIdAndRemove(partId)
             .then(part => {
                 let author = part.author;
+
+                let partImagePath = `./public/images/partPictures/${partId}`;
+
+                fs.unlinkSync(partImagePath, err => {
+                    if (err) {
+                        console.log(err.message);
+                    }
+                });
 
                 User.findById(author).then(author => {
                     let index = author.partAds.indexOf(partId);

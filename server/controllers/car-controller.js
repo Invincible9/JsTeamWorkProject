@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Car = mongoose.model('Car')
 const User = mongoose.model('User')
+const fs = require('fs');
 
 module.exports = {
     createAdCarGET: (req, res) => {
@@ -40,7 +41,7 @@ module.exports = {
             .then(carAdvert => {
                 let carImagePath = `./public/images/CarPictures/${carAdvert.id}`;
                 let picture = req.files.pictureUrl;
-                
+
                 Car.findByIdAndUpdate(carAdvert.id, {$set: {pictureURL: carImagePath}}).then(() => {
                     picture.mv(carImagePath, err => {
                         if (err) {
@@ -49,11 +50,11 @@ module.exports = {
                     });
 
                     User.findById(adAuthor).then(author => {
-                        author.carAds.push(carAdvert.id)
+                        author.carAds.push(carAdvert.id);
                         author.save()
                     });
-
                 });
+
             });
 
         res.redirect('/')
@@ -90,7 +91,7 @@ module.exports = {
         let carId = req.params.id
         let reqBody = req.body
 
-        
+
         let picture = req.files.pictureUrl;
 
         let carPictureUpdated;
@@ -130,7 +131,7 @@ module.exports = {
                     car.pictureURL = carPictureUpdated || car.pictureURL,
                     car.location = carLocationUpdated,
                     car.date = Date.now();
-                    car.author = adAuthorUpdated,
+                car.author = adAuthorUpdated,
                     car.description = carDescriptionUpdated
                 car.save()
 
@@ -153,6 +154,14 @@ module.exports = {
             .then(car => {
                 let author = car.author;
 
+                let carImagePath = `./public/images/CarPictures/${carId}`;
+
+                fs.unlinkSync(carImagePath, err => {
+                    if (err) {
+                        console.log(err.message);
+                    }
+                });
+
                 User.findById(author).then(author => {
                     let index = author.carAds.indexOf(carId);
                     author.carAds.splice(index, 1);
@@ -161,6 +170,8 @@ module.exports = {
                     res.redirect('/')
                 });
             });
+
+
     }
 
 
