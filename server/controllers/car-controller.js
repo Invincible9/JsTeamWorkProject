@@ -36,7 +36,8 @@ module.exports = {
                 location: carLocation,
                 date: Date.now(),
                 author: adAuthor,
-                description: carDescription
+                description: carDescription,
+                views: 0
             })
             .then(carAdvert => {
                 let carImagePath = `./public/images/CarPictures/${carAdvert.id}`;
@@ -68,6 +69,11 @@ module.exports = {
             .populate('comments')
             .populate('author')
             .then(car => {
+
+                let countView = car.views;
+                car.views = ++countView;
+                car.save();
+
                 res.render('cars/carDetail', {
                     car: car
                 })
@@ -170,9 +176,20 @@ module.exports = {
                     res.redirect('/')
                 });
             });
+    },
 
+    addLikeCarPOST: (req, res) => {
+        let carId = req.params.id;
+        let authorId = res.locals.currentUser.id;
+
+        Car.findById(carId)
+            .then(car => {
+                car.likes.push(authorId);
+                car.save();
+            });
+
+        res.redirect(`/cars/${carId}`);
 
     }
 
-
-}
+};

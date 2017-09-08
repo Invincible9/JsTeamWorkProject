@@ -9,6 +9,9 @@
     <script src="/js/jquery.waypoints.min.js"></script>
     <!-- Main JS -->
     <script src="/js/main.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </header>
 
 <body>
@@ -66,7 +69,7 @@
                 <li><a href="#"><i class="icon-instagram"></i></a></li>
             </ul>
             <div class="col-lg-12 col-md-12 text-center">
-                <h1 id="fh5co-logo"><a href="index.html">Parts Magazine <sup>TM</sup></a></h1>
+                <h1 id="fh5co-logo"><a href="/listAllParts">Parts Magazine <sup>TM</sup></a></h1>
             </div>
 
         </div>
@@ -82,7 +85,7 @@
         <article
                 class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
             <figure class="animate-box">
-                <img src="/images/PartPictures/{{part_id}}" alt="{{part.name}}" class="img-responsive">
+                <img src="/images/PartPictures/{{part.id}}" alt="{{part.name}}">
             </figure>
             <span class="fh5co-meta animate-box"><a href="#">{{part.name}}</a></span>
             <h2 class="fh5co-article-title animate-box"><a href="#">{{part.location}} {{part.price}}$</a></h2>
@@ -97,7 +100,7 @@
                             Condition: {{part.condition}} <br/>
                             Availability: {{part.availability}}<br/>
                             location: {{part.location}}<br/>
-
+                            Like: <a href="/likePart/{{part.id}}"><span class="glyphicon glyphicon-thumbs-up" ></span></a>
                             <!-- TO ADD COMMENTS LATER -->
                         </p>
 
@@ -115,7 +118,9 @@
                             <p>Name: {{part.name}}</p>
                             <p>Price: {{part.price}}</p>
                             <p>Availability: {{part.availability}}</p>
-                            <p>location: {{part.location}}</p>
+                            <p>Location: {{part.location}}</p>
+                            <p>Views: {{part.views}}</p>
+                            <p>Likes: 0</p>
                         </div>
                     </div>
                 </div>
@@ -123,7 +128,7 @@
                 <div class="row rp-b">
                     <div class="col-md-12 animate-box">
                         <blockquote>
-                            <p>&ldquo;{{part.description}} &rdquo; <cite>&mdash; {{part.author.username}}</cite></p>
+                            <p>&ldquo;{{part.description}}&rdquo; <cite>&mdash; {{part.author.username}}</cite></p>
                         </blockquote>
                     </div>
                 </div>
@@ -132,7 +137,7 @@
                     <div class="col-md-12 animate-box">
                         <blockquote>
                             {{#each part.comments}}
-                                <p>&ldquo;{{this.comment}} &rdquo; <cite>&mdash; {{this.name}}</cite></p>
+                                <p>&ldquo;{{this.comment}}&rdquo; <cite>&mdash; {{this.name}}</cite></p>
                             {{/each}}
                         </blockquote>
                     </div>

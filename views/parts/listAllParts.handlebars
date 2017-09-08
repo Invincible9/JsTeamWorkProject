@@ -66,7 +66,7 @@
                 <li><a href="#"><i class="icon-instagram"></i></a></li>
             </ul>
             <div class="col-lg-12 col-md-12 text-center">
-                <h1 id="fh5co-logo"><a href="/">Parts Magazine <sup>TM</sup></a></h1>
+                <h1 id="fh5co-logo"><a href="/listAllParts">Parts Magazine <sup>TM</sup></a></h1>
             </div>
         </div>
 
@@ -79,7 +79,7 @@
         {{#each parts}}
             <article class="col-lg-3 col-md-3 col-sm-3 col-xs-6 col-xxs-12 animate-box">
                 <figure>
-                    <img src="/images/PartPictures/{{_id}}" alt="{{name}}" class="img-responsive">
+                   <a href="/parts/{{_id}}"><img src="/images/PartPictures/{{_id}}" alt="{{name}}" class="img-responsive"></a>
                 </figure>
                 <span class="fh5co-meta"><a href="/parts/{{_id}}">{{location}}</a></span>
                 <h2 class="fh5co-article-title"><a href="/parts/{{_id}}">{{condition}}  {{price}}$ </a></h2>

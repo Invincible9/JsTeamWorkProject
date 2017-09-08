@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const ObjectId =  mongoose.Schema.Types.ObjectId;
 
 let partSchema = new mongoose.Schema({
@@ -11,8 +11,10 @@ let partSchema = new mongoose.Schema({
     date: {type: Date, default: Date.now},
     location: {type: String},
     author: {type: ObjectId, ref: 'User'},
-    description: {type: String} 
-})
+    description: {type: String},
+    views: {type: Number},
+    likes: [{type: ObjectId, ref: 'User'}]
+});
 
 partSchema.index({'$**': 'text'});
 

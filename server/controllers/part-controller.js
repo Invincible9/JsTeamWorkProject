@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
-const Part = mongoose.model('Part')
-const User = mongoose.model('User')
+const mongoose = require('mongoose');
+const Part = mongoose.model('Part');
+const User = mongoose.model('User');
 const fs = require('fs');
 
 module.exports = {
@@ -27,7 +27,8 @@ module.exports = {
                 date: Date.now(),
                 location: partLocation,
                 author: partAuthor,
-                description: partDescription
+                description: partDescription,
+                views: 0
             })
             .then(partAdvert => {
                 let partImagePath = `./public/images/partPictures/${partAdvert.id}`;
@@ -43,7 +44,7 @@ module.exports = {
                     });
 
                     User.findById(partAuthor).then(author => {
-                        author.partAds.push(partAdvert.id)
+                        author.partAds.push(partAdvert.id);
                         author.save()
                     });
                 });
@@ -88,13 +89,17 @@ module.exports = {
     },
 
     getPartById: (req, res) => {
-        let partId = req.params.id
+        let partId = req.params.id;
 
         Part
             .findById(partId)
             .populate('author')
             .populate('comments')
             .then(part => {
+
+                let countView = part.views;
+                part.views = ++countView;
+                part.save();
 
                 res.render('parts/partDetail', {
                     part:part
@@ -126,7 +131,6 @@ module.exports = {
                 partPictureUpdated = partImagePath;
             });
         }
-        
 
         let partName = body.name;
         let partPrice = body.price;
@@ -184,6 +188,10 @@ module.exports = {
                     res.redirect('/listAllParts')
                 });
             });
+    },
+
+    addLikePartPOST: (req, res) => {
+
     }
 
 };

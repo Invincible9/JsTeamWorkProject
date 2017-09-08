@@ -1,8 +1,8 @@
-const mongoose = require('mongoose')
-const encryption = require('../utilities/encryption')
-const ObjectId = mongoose.Schema.Types.ObjectId
+const mongoose = require('mongoose');
+const encryption = require('../utilities/encryption');
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
-const REQUIRED_VALIDATION_MESSAGE = '{PATH} is required'
+const REQUIRED_VALIDATION_MESSAGE = '{PATH} is required';
 
 let userSchema = new mongoose.Schema({
   username: { type: String, required: REQUIRED_VALIDATION_MESSAGE, unique: true },
@@ -14,13 +14,13 @@ let userSchema = new mongoose.Schema({
   carAds: [{type: ObjectId, ref: 'Car'}],
   partAds: [{type: ObjectId, ref: 'Part'}],
   comments: [{type: ObjectId, ref: 'Comment'}]
-})
+});
 
 userSchema.method({
   authenticate: function (password) {
     return encryption.generateHashedPassword(this.salt, password) === this.hashedPass
   }
-})
+});
 
 // userSchema.method({
 
@@ -36,15 +36,15 @@ userSchema.method({
 
 // })
 
-let User = mongoose.model('User', userSchema)
+let User = mongoose.model('User', userSchema);
 
-module.exports = User
+module.exports = User;
 module.exports.seedAdminUser = () => {
   User.find({}).then(users => {
-    if (users.length > 0) return
+    if (users.length > 0) return;
 
-    let salt = encryption.generateSalt()
-    let hashedPass = encryption.generateHashedPassword(salt, '1234567')
+    let salt = encryption.generateSalt();
+    let hashedPass = encryption.generateHashedPassword(salt, '1234567');
 
     User.create({
       username: 'Admin',
@@ -56,4 +56,4 @@ module.exports.seedAdminUser = () => {
       likedThreads: []
     })
   })
-}
+};

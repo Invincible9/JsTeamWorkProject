@@ -15,7 +15,9 @@ let carSchema = new mongoose.Schema({
     date: {type: Date, default: Date.now},
     comments: [{type: ObjectId, ref: 'Comment'}],
     author: {type: ObjectId, ref: 'User'},
-    description: {type: String}
+    description: {type: String},
+    views: {type: Number},
+    likes: [{type: ObjectId, ref: 'User'}]
 });
 
 carSchema.index({'$**': 'text'});

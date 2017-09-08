@@ -10,6 +10,8 @@
     <script src="/js/jquery.waypoints.min.js"></script>
     <!-- Main JS -->
     <script src="/js/main.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </header>
 
 <body>
@@ -18,7 +20,8 @@
             class="icon-cross3"></i> <span>Close</span></span></a>
     <div class="fh5co-bio">
         <figure>
-            <img src="/images/CarPictures/{{_id}}" alt="{{car.model}}" class="img-responsive">
+            <a href="/cars/{{_id}}"><img src="/images/CarPictures/{{_id}}" alt="{{car.model}}"
+                                         class="img-responsive"></a>
         </figure>
         <h3 class="heading">About Me</h3>
         <h2>Emily Tran Le</h2>
@@ -46,8 +49,8 @@
             <h3 class="heading">Search</h3>
             <form action="/search" method="post">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="keyword" placeholder="Type a keyword"><br />
-                    <input type="submit" class="btn btn-success" value="Search" />
+                    <input type="text" class="form-control" name="keyword" placeholder="Type a keyword"><br/>
+                    <input type="submit" class="btn btn-success" value="Search"/>
                 </div>
             </form>
         </div>
@@ -67,7 +70,7 @@
                 <li><a href="#"><i class="icon-instagram"></i></a></li>
             </ul>
             <div class="col-lg-12 col-md-12 text-center">
-                <h1 id="fh5co-logo"><a href="index.html">Auto Magazine <sup>TM</sup></a></h1>
+                <h1 id="fh5co-logo"><a href="/cars/{{_id}}">Auto Magazine <sup>TM</sup></a></h1>
             </div>
 
         </div>
@@ -83,7 +86,7 @@
         <article
                 class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
             <figure class="animate-box">
-                <img src="/images/CarPictures/{{_id}}" alt="{{car.model}}" class="img-responsive">
+                <img src="/images/CarPictures/{{car.id}}" alt="{{car.model}}">
             </figure>
             <span class="fh5co-meta animate-box"><a href="#">{{car.model}}</a></span>
             <h2 class="fh5co-article-title animate-box"><a href="#">{{car.location}} {{car.price}}$</a></h2>
@@ -93,7 +96,7 @@
             <div class="col-lg-12 col-lg-offset-0 col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0 text-left content-article">
                 <div class="row">
                     <div class="col-lg-8 cp-r animate-box">
-                        <p>Model: {{car.model}}<br/>
+                        <p> Model: {{car.model}}<br/>
                             Price: {{car.price}}<br/>
                             Distance: {{car.distanceTraveled}} km<br/>
                             Date Of Manufacture: {{car.dateOfManufacture}}<br/>
@@ -101,8 +104,23 @@
                             Power: {{car.power}}<br/>
                             Transmission: {{car.transmission}}<br/>
                             Color: {{car.color}}<br/>
-                            location: {{car.location}}<br/>
-                            <!-- TO ADD COMMENTS LATER -->
+                            Location: {{car.location}}<br/>
+                        <!--<form method="post" action="/likeCar/{{car.id}}">-->
+
+                        Like: <a href="/likeCar/{{car.id}}" id="likeCar1"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+                        <script>
+                            $('#likeCar1').click(function (ev) {
+                                ev.preventDefault();
+                                let form = $('<form action="/likeCar/{{car.id}}" method="post">');
+                                window.onload = function () {
+                                    $('#likeCar1').submit();
+                                }
+
+                            })
+                        </script>
+
+                            <!--</form>-->
+                        <!-- TO ADD COMMENTS LATER -->
                         </p>
 
 
@@ -120,6 +138,8 @@
                             <p>Price: {{car.price}}</p>
                             <p>Distance: {{car.distanceTraveled}}km</p>
                             <p>Transmission: {{car.transmission}}</p>
+                            <p>Views: {{car.views}}</p>
+                            <p>Likes: 0</p>
 
                             {{!-- <p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia</p> --}}
                         </div>
@@ -129,7 +149,7 @@
                 <div class="row rp-b">
                     <div class="col-md-12 animate-box">
                         <blockquote>
-                            <p>&ldquo;{{car.description}} &rdquo; <cite>&mdash; {{car.author.username}}</cite></p>
+                            <p>&ldquo;{{car.description}}&rdquo; <cite>&mdash; {{car.author.username}}</cite></p>
                         </blockquote>
                     </div>
                 </div>
@@ -138,7 +158,7 @@
                     <div class="col-md-12 animate-box">
                         <blockquote>
                             {{#each car.comments}}
-                                <p>&ldquo;{{this.comment}} &rdquo; <cite>&mdash; {{this.name}}</cite></p>
+                                <p>&ldquo;{{this.comment}}&rdquo; <cite>&mdash; {{this.name}}</cite></p>
                             {{/each}}
                         </blockquote>
                     </div>

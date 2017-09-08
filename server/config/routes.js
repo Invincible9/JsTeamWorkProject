@@ -39,6 +39,9 @@ module.exports = (app) => {
 
   app.post('/search', controllers.search.searchByKeyword);
 
+  app.post('/likeCar/:id', auth.isAuthenticated, controllers.cars.addLikeCarPOST);
+  app.post('/likePart/:id', auth.isAuthenticated, controllers.parts.addLikePartPOST);
+
   app.all('*', (req, res) => {
     res.status(404);
     res.send('404 Not found');
