@@ -88,11 +88,11 @@
                     {{#if ./rightToChangePost}}
                         <a class="btn btn-success" href="/editCar/{{_id}}">EDIT</a>
                         <a class="btn btn-primary" href="/cars/{{_id}}">DETAILS</a>
-                        <a class="btn btn-danger" href="/deleteCar/{{_id}}">DELETE</a>
+                        <button class="btn btn-danger delete-link" id="{{_id}}">DELETE</button>
                     {{else if ../isAdmin}}
                         <a class="btn btn-success" href="/editCar/{{_id}}">EDIT</a>
                         <a class="btn btn-primary" href="/cars/{{_id}}">DETAILS</a>
-                        <a class="btn btn-danger" href="/deleteCar/{{_id}}">DELETE</a>
+                        <button class="btn btn-danger delete-link" id="{{_id}}">DELETE</button>
                     {{else}}
                         <a class="btn btn-primary" href="/cars/{{_id}}">DETAILS</a>
                     {{/if}}
@@ -107,6 +107,23 @@
     </div>
 </div>
 
+<!---  Modal for part delete -->
+<div id="confirm-delete-modal" class="modal fade" role="dialog" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" style="text-align: center;">
+                <span>Are you sure you want to delete this part?</span><br />
+                <span>This action will be permanent.</span>
+            </div>
+            <div class="modal-footer" style="text-align: center; ">
+                <button id="close-delete" class="btn btn-default" style="margin-right: 15px">Cancel</button>
+                <button class="btn btn-danger delete-btn-confirm">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!---  End Modal  -->
+
 <footer id="fh5co-footer">
     <p>
         <small>&copy; 2016. Magazine Free HTML5. All Rights Reserverd. <br> Designed by <a href="http://freehtml5.co"
@@ -114,6 +131,35 @@
             Demo Images: <a href="http://unsplash.com/" target="_blank">Unsplash</a></small>
     </p>
 </footer>
+<script>
+$(function () {
+    $('.delete-link').on('click', function(e) {
+        let carId = this.id;
+        $('.delete-btn-confirm').attr('id', carId);
 
+        $('#confirm-delete-modal').modal('show');
+    });
+
+    $('.delete-btn-confirm').on('click',function(e) {
+        let carId = this.id;
+        
+        $.ajax({
+            type: 'POST',
+            url: `/deleteCar/${carId}`,
+            success: () => {
+                $('#confirm-delete-modal').modal('hide');
+                location.reload();  
+            },
+            error: (err) => {
+                console.log(err);
+            }
+        });
+    });
+
+    $('#close-delete').on('click', (e) => {
+        $('#confirm-delete-modal').modal('hide');
+    });
+});
+</script>
 </body>
 </html>

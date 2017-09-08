@@ -145,37 +145,30 @@ module.exports = {
             })
     },
 
-    deleteCarByIdGET: (req, res) => {
-        let carId = req.params.id;
-
-        Car.findById(carId).then(car => {
-            res.render('cars/deleteCar', {car: car});
-        })
-    },
-
     deleteCarByIdPOST: (req, res) => {
         let carId = req.params.id;
 
-        Car.findByIdAndRemove(carId)
-            .then(car => {
-                let author = car.author;
+        Car.findByIdAndRemove(carId).then(car => {
+            let author = car.author;
 
+            if (car.pictureUrl != undefined) {
                 let carImagePath = `./public/images/CarPictures/${carId}`;
-
+                
                 fs.unlinkSync(carImagePath, err => {
                     if (err) {
                         console.log(err.message);
                     }
                 });
+            }
 
-                User.findById(author).then(author => {
-                    let index = author.carAds.indexOf(carId);
-                    author.carAds.splice(index, 1);
-                    author.save();
+            User.findById(author).then(author => {
+                let index = author.carAds.indexOf(carId);
+                author.carAds.splice(index, 1);
+                author.save();
 
-                    res.redirect('/')
-                });
+                res.redirect('/')
             });
+        });
     },
 
     addLikeCarPOST: (req, res) => {

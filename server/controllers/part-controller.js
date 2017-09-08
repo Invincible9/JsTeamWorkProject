@@ -142,13 +142,13 @@ module.exports = {
 
         Part.findById(partId).then(part => {
             part.name = partName,
-                part.price = partPrice,
-                part.condition = partCondition,
-                part.availability = partAvailability,
-                part.pictureURL = partPictureUpdated || part.pictureURL,
-                part.location = partLocation,
-                part.author = partAuthor,
-                part.description = partDescription
+            part.price = partPrice,
+            part.condition = partCondition,
+            part.availability = partAvailability,
+            part.pictureURL = partPictureUpdated || part.pictureURL,
+            part.location = partLocation,
+            part.author = partAuthor,
+            part.description = partDescription
 
             part.save();
             res.redirect('/listAllParts');
@@ -156,22 +156,13 @@ module.exports = {
 
     },
 
-
-    deletePartByIdGET: (req, res) => {
-        let partId = req.params.id;
-
-        Part.findById(partId).then(part => {
-            res.render("parts/deletePart", {part: part});
-        })
-    },
-
     deletePartByIdPOST: (req, res) => {
         let partId = req.params.id;
 
-        Part.findByIdAndRemove(partId)
-            .then(part => {
-                let author = part.author;
+        Part.findByIdAndRemove(partId).then(part => {
+            let author = part.author;
 
+            if (part.pictureUrl != undefined) {
                 let partImagePath = `./public/images/partPictures/${partId}`;
 
                 fs.unlinkSync(partImagePath, err => {
@@ -179,15 +170,16 @@ module.exports = {
                         console.log(err.message);
                     }
                 });
+            }
 
-                User.findById(author).then(author => {
-                    let index = author.partAds.indexOf(partId);
-                    author.partAds.splice(index, 1);
-                    author.save();
+            User.findById(author).then(author => {
+                let index = author.partAds.indexOf(partId);
+                author.partAds.splice(index, 1);
+                author.save();
 
-                    res.redirect('/listAllParts')
-                });
+                res.redirect('/listAllParts')
             });
+        });
     },
 
     addLikePartPOST: (req, res) => {
