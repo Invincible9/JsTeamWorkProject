@@ -40,7 +40,12 @@ module.exports = (app) => {
   app.post('/addCarComment/:id', auth.isAuthenticated, controllers.comments.addCommentCarPOST);
   app.post('/addPartComment/:id', auth.isAuthenticated, controllers.comments.addCommentPartPOST);
 
+  // Search route
   app.post('/search', controllers.search.searchByKeyword);
+
+  // Likes routes
+  app.get('/likeCar/:id', auth.isAuthenticated, controllers.cars.addLikeCarPOST);
+  app.get('/likePart/:id', auth.isAuthenticated, controllers.parts.addLikePartPOST);
 
   app.all('*', (req, res) => {
     res.status(404);

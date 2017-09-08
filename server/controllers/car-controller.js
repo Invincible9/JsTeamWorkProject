@@ -63,12 +63,24 @@ module.exports = {
 
     getCarById: (req, res) => {
         let carId = req.params.id;
+        let authorId = res.locals.currentUser.id;
 
         Car
             .findById(carId)
             .populate('comments')
             .populate('author')
             .then(car => {
+
+                let voteUp = true;
+
+                for (let id of car.likes) {
+                    if (id == authorId) {
+                        voteUp = false;
+                        break;
+                    }
+                }
+
+                car.rightToVoteUp = voteUp;
 
                 let countView = car.views;
                 car.views = ++countView;
@@ -96,7 +108,6 @@ module.exports = {
     editCarByIdPOST: (req, res) => {
         let carId = req.params.id
         let reqBody = req.body
-
 
         let picture = req.files.pictureUrl;
 
@@ -153,7 +164,7 @@ module.exports = {
 
             if (car.pictureUrl != undefined) {
                 let carImagePath = `./public/images/CarPictures/${carId}`;
-                
+
                 fs.unlinkSync(carImagePath, err => {
                     if (err) {
                         console.log(err.message);
@@ -177,8 +188,22 @@ module.exports = {
 
         Car.findById(carId)
             .then(car => {
-                car.likes.push(authorId);
-                car.save();
+
+                let voteUp = true;
+
+                for (let id of car.likes) {
+                    if (id == authorId) {
+                        voteUp = false;
+                        break;
+                    }
+                }
+
+                car.rightToVoteUp = voteUp;
+
+                if (voteUp) {
+                    car.likes.push(authorId);
+                    car.save();
+                }
             });
 
         res.redirect(`/cars/${carId}`);

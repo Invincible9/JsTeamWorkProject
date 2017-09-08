@@ -105,25 +105,12 @@
                             Transmission: {{car.transmission}}<br/>
                             Color: {{car.color}}<br/>
                             Location: {{car.location}}<br/>
-                        <!--<form method="post" action="/likeCar/{{car.id}}">-->
-
-                        Like: <a href="/likeCar/{{car.id}}" id="likeCar1"><span class="glyphicon glyphicon-thumbs-up"></span></a>
-                        <script>
-                            $('#likeCar1').click(function (ev) {
-                                ev.preventDefault();
-                                let form = $('<form action="/likeCar/{{car.id}}" method="post">');
-                                window.onload = function () {
-                                    $('#likeCar1').submit();
-                                }
-
-                            })
-                        </script>
-
-                            <!--</form>-->
-                        <!-- TO ADD COMMENTS LATER -->
+                            {{#if car.rightToVoteUp}}
+                                Like: <a href="/likeCar/{{car.id}}"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+                                {{else}}
+                                Like: <a href="/likeCar/{{car.id}}" onclick="return false;"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+                            {{/if}}
                         </p>
-
-
 
                         {{!-- <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large <a href="#">language</a> ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>  --}}
 
@@ -139,7 +126,7 @@
                             <p>Distance: {{car.distanceTraveled}}km</p>
                             <p>Transmission: {{car.transmission}}</p>
                             <p>Views: {{car.views}}</p>
-                            <p>Likes: 0</p>
+                            <p>Likes: {{car.likes.length}}</p>
 
                             {{!-- <p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia</p> --}}
                         </div>

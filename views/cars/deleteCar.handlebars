@@ -1,0 +1,80 @@
+<h1>Are you sure you want to delete this car ad?</h1>
+
+<div class="container-fluid">
+    <div class="jumbotron">
+        <p><img src="/images/CarPictures/{{car._id}}" alt="{{car.model}}" /></p>
+        <form action="/deleteCar/{{car._id}}" method="POST">
+            <div class="form-group">
+                <label for="model">Model:</label>
+                <input class="form-control" type="text" name="model" placeholder="model" required="required" value="{{car.model}}" disabled="disabled" /><br />
+            </div>
+            <div class="form-group">
+                <label for="price">Price:</label>
+                <input class="form-control" type="number" min="0" disabled="disabled" name="price" placeholder="price" required="required" value="{{car.price}}"/><br />
+            </div>
+            <div class="form-group">
+                <label for="distanceTraveled">Distance Traveled:</label>
+                <input class="form-control" type="number" min="0" disabled="disabled" name="distanceTraveled" placeholder="distanceTraveled" required="required" value="{{car.distanceTraveled}}"/><br />
+            </div>
+
+            <div class="form-group">
+                <label for="dateOfManufacture">Date of Manufacture:</label>
+                <input class="form-control" type="text" disabled="disabled" name="dateOfManufacture" placeholder="dateOfManufacture" required="required" value="{{car.dateOfManufacture}}"/><br />
+            </div>
+
+            <!--engine-->
+            <div class="form-group">
+                <label for="engine">Engine:</label>
+                <select class="form-control" name="engine" disabled="disabled">
+                    <option value="gasoline" selected="selected">Gasoline</option>
+                    <option value="diesel">Diesel</option>
+                    <option value="methane">Methane</option>
+                    <option value="gas">Gas</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <!--power-->
+            <div class="form-group">
+                <label for="power">Power:</label>
+                <input class="form-control" type="text" disabled="disabled" name="power" placeholder="power" required="required" value="{{car.power}}"/><br />
+            </div>
+
+            <!--transmission-->
+            <div class="form-group">
+                <label for="transmission">Transmission:</label>
+                <select class="form-control" name="transmission" disabled="disabled">
+                    <option value="manual">Manual</option>
+                    <option value="auto" selected="selected">Auto</option>
+                    <option value="other" selected="selected">Other</option>
+                </select>
+            </div>
+
+            <!--color-->
+            <div class="form-group">
+                <label for="color">Color:</label>
+                <input class="form-control" type="text" disabled="disabled" name="color" placeholder="color" required="required" value="{{car.color}}"/><br />
+            </div>
+
+            <!--pictureURL-->
+            <div class="form-group">
+                <label for="pictureUrl">Picture:</label>
+                <input class="form-control" type="file" disabled="disabled" name="pictureUrl" required="required"><br />
+            </div>
+
+            <!--location-->
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <input class="form-control" type="text" disabled="disabled" name="location" placeholder="location" required="required" value="{{car.location}}"/><br />
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea class="form-control" disabled="disabled" name="description" rows="5" cols="40" placeholder="description">{{car.description}}</textarea>
+            </div>
+
+            <input class="btn btn-danger" type="submit" value="Confirm Delete" />
+        </form>
+
+    </div>
+</div>

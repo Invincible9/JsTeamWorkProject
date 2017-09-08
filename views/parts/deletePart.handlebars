@@ -1,0 +1,53 @@
+<h1>Are you sure you want to delete this part ad?</h1>
+
+<div class="container-fluid">
+    <div class="jumbotron">
+        <p><img src="/images/PartPictures/{{part._id}}" alt="{{part.name}}" /></p>
+        <form action="/deletePart/{{part._id}}" method="POST">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input class="form-control" disabled="disabled" type="text" name="name" placeholder="Name" required="required" value="{{part.name}}"/>
+            </div>
+            <div class="form-group">
+                <label for="price">Price:</label>
+                <input class="form-control" disabled="disabled" type="number" min="0" name="price" placeholder="Price" required="required" value="{{part.price}}"/><br />
+            </div>
+
+            <div class="form-group">
+                <label for="condition">Condition:</label>
+                <select class="form-control" name="condition" disabled="disabled">
+                    <option value="new">New</option>
+                    <option value="second hand">Second Hand</option>
+                </select>
+                <br />
+            </div>
+
+            <div class="form-group">
+                <label for="availability">Availability:</label>
+                <select class="form-control" name="availability" disabled="disabled">
+                    <option value="yes">YES</option>
+                    <option value="no">NO</option>
+                </select>
+                {{!-- <input class="form-control" type="text" name="availability" placeholder="Availability" required="required" /><br /> --}}
+            </div>
+
+            <div class="form-group">
+                <label for="pictureURL">Picture:</label>
+                <input class="form-control" disabled="disabled" type="file" name="pictureURL" required="required" /><br />
+            </div>
+
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <input class="form-control" disabled="disabled" type="text" name="location" placeholder="location" required="required" value="{{part.location}}"/><br />
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea class="form-control" disabled="disabled" name="description" rows="5" cols="40" placeholder="description">{{part.description}}</textarea>
+            </div>
+
+            <input class="btn btn-danger" type="submit" value="Confirm Delete" />
+        </form>
+
+    </div>
+</div>

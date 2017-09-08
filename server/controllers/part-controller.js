@@ -33,7 +33,7 @@ module.exports = {
             .then(partAdvert => {
                 let partImagePath = `./public/images/partPictures/${partAdvert.id}`;
                 let picture = req.files.pictureURL;
-                
+
                 Part.findByIdAndUpdate(partAdvert.id, {$set: {pictureURL: partImagePath}}).then(() => {
                     // console.log(picture);
                     // console.log(partImagePath)
@@ -90,12 +90,24 @@ module.exports = {
 
     getPartById: (req, res) => {
         let partId = req.params.id;
+        let authorId = res.locals.currentUser.id;
 
         Part
             .findById(partId)
             .populate('author')
             .populate('comments')
             .then(part => {
+
+                let voteUp = true;
+
+                for(let id of part.likes){
+                    if(id == authorId){
+                        voteUp = false;
+                        break;
+                    }
+                }
+
+                part.rightToVoteUp = voteUp;
 
                 let countView = part.views;
                 part.views = ++countView;
@@ -120,7 +132,7 @@ module.exports = {
         let body = req.body;
 
         let picture = req.files.pictureURL;
-        
+
         let partPictureUpdated;
         if (picture) {
             let partImagePath = `./public/images/PartPictures/${partId}`;
@@ -183,7 +195,32 @@ module.exports = {
     },
 
     addLikePartPOST: (req, res) => {
+        let partId = req.params.id;
+        let authorId = res.locals.currentUser.id;
 
-    }
+        Part.findById(partId)
+            .then(part => {
+
+                let voteUp = true;
+
+                for(let id of part.likes){
+                    if(id == authorId){
+                        voteUp = false;
+                        break;
+                    }
+                }
+
+                part.rightToVoteUp = voteUp;
+
+                if(voteUp) {
+                    part.likes.push(authorId);
+                    part.save();
+                }
+            });
+
+        res.redirect(`/parts/${partId}`);
+    },
+
+
 
 };
