@@ -1,8 +1,9 @@
-const home = require('./home-controller')
-const users = require('./users-controller')
-const cars = require('../controllers/car-controller')
-const parts = require('../controllers/part-controller')
-const comments = require('../controllers/comment-controller')
+const home = require('./home-controller');
+const users = require('./users-controller');
+const cars = require('../controllers/car-controller');
+const parts = require('../controllers/part-controller');
+const comments = require('../controllers/comment-controller');
+const search = require('../controllers/search-controller');
 
 
 module.exports = {
@@ -10,5 +11,6 @@ module.exports = {
     users: users,
     cars: cars,
     parts: parts,
-    comments: comments
+    comments: comments,
+    search: search
 }

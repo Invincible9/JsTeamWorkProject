@@ -14,6 +14,8 @@ let partSchema = new mongoose.Schema({
     description: {type: String} 
 })
 
-let Part = mongoose.model('Part', partSchema)
+partSchema.index({'$**': 'text'});
 
-module.exports = Part
+let Part = mongoose.model('Part', partSchema);
+
+module.exports = Part;

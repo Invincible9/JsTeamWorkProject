@@ -15,9 +15,11 @@ let carSchema = new mongoose.Schema({
     date: {type: Date, default: Date.now},
     comments: [{type: ObjectId, ref: 'Comment'}],
     author: {type: ObjectId, ref: 'User'},
-    description: {type: String} 
-})
+    description: {type: String}
+});
 
-let Car = mongoose.model('Car', carSchema)
+carSchema.index({'$**': 'text'});
 
-module.exports = Car
+let Car = mongoose.model('Car', carSchema);
+
+module.exports = Car;

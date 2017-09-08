@@ -8,19 +8,19 @@ module.exports = {
     },
 
     createAdCarPOST: (req, res) => {
-        let reqBody = req.body
+        let reqBody = req.body;
 
-        let carModel = reqBody.model
-        let carPrice = reqBody.price
-        let carDistanceTravelled = reqBody.distanceTraveled
-        let carDateOfManufacture = reqBody.dateOfManufacture
-        let carEngine = reqBody.engine
-        let carPower = reqBody.power
-        let carTransmission = reqBody.transmission
-        let carColor = reqBody.color
-        let carLocation = reqBody.location
-        let carDescription = reqBody.description
-        let adAuthor = res.locals.currentUser.id
+        let carModel = reqBody.model;
+        let carPrice = reqBody.price;
+        let carDistanceTravelled = reqBody.distanceTraveled;
+        let carDateOfManufacture = reqBody.dateOfManufacture;
+        let carEngine = reqBody.engine;
+        let carPower = reqBody.power;
+        let carTransmission = reqBody.transmission;
+        let carColor = reqBody.color;
+        let carLocation = reqBody.location;
+        let carDescription = reqBody.description;
+        let adAuthor = res.locals.currentUser.id;
 
         Car
             .create({
@@ -104,17 +104,17 @@ module.exports = {
             });
         }
 
-        let carModelUpdated = reqBody.model
-        let carPriceUpdated = reqBody.price
-        let carDistanceTravelledUpdated = reqBody.distanceTraveled
-        let carDateOfManufactureUpdated = reqBody.dateOfManufacture
-        let carEngineUpdated = reqBody.engine
-        let carPowerUpdated = reqBody.power
-        let carTransmissionUpdated = reqBody.transmission
-        let carColorUpdated = reqBody.color
-        let carLocationUpdated = reqBody.location
-        let carDescriptionUpdated = reqBody.description
-        let adAuthorUpdated = res.locals.currentUser.id
+        let carModelUpdated = reqBody.model;
+        let carPriceUpdated = reqBody.price;
+        let carDistanceTravelledUpdated = reqBody.distanceTraveled;
+        let carDateOfManufactureUpdated = reqBody.dateOfManufacture;
+        let carEngineUpdated = reqBody.engine;
+        let carPowerUpdated = reqBody.power;
+        let carTransmissionUpdated = reqBody.transmission;
+        let carColorUpdated = reqBody.color;
+        let carLocationUpdated = reqBody.location;
+        let carDescriptionUpdated = reqBody.description;
+        let adAuthorUpdated = res.locals.currentUser.id;
 
         Car
             .findById(carId)

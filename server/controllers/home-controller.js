@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const Car = mongoose.model('Car')
+const mongoose = require('mongoose');
+const Car = mongoose.model('Car');
 
 module.exports = {
   index: (req, res) => {

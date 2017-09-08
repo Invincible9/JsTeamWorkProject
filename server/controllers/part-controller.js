@@ -8,14 +8,14 @@ module.exports = {
     },
 
     createAdPartPOST: (req, res) => {
-        let reqBody = req.body
-        let partName = reqBody.name
-        let partPrice = reqBody.price
-        let partCondition = reqBody.condition
-        let partAvailability = reqBody.availability
-        let partLocation = reqBody.location
-        let partDescription = reqBody.description
-        let partAuthor = res.locals.currentUser.id
+        let reqBody = req.body;
+        let partName = reqBody.name;
+        let partPrice = reqBody.price;
+        let partCondition = reqBody.condition;
+        let partAvailability = reqBody.availability;
+        let partLocation = reqBody.location;
+        let partDescription = reqBody.description;
+        let partAuthor = res.locals.currentUser.id;
 
         Part
             .create({

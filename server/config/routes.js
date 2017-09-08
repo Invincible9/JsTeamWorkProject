@@ -37,7 +37,7 @@ module.exports = (app) => {
   app.post('/addCarComment/:id', auth.isAuthenticated, controllers.comments.addCommentCarPOST);
   app.post('/addPartComment/:id', auth.isAuthenticated, controllers.comments.addCommentPartPOST);
 
-
+  app.post('/search', controllers.search.searchByKeyword);
 
   app.all('*', (req, res) => {
     res.status(404);
