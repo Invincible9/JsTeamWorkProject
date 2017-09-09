@@ -51,6 +51,8 @@ module.exports = (app) => {
   app.get('/users/profile/:id', auth.isAuthenticated, controllers.users.getUserProfile);
   app.get('/users/settings/:id', auth.isAuthenticated, controllers.users.userSettingsGet);
   app.post('/users/uploadProfilePicture/:id', auth.isAuthenticated, controllers.users.userUploadProfilePic);
+  app.get('/users/deleteProfile/:id', auth.isAuthenticated, controllers.users.removeUserAccountById);
+  
 
   // Error handling invalid rrl
   app.use((req, res) => {
