@@ -1,7 +1,10 @@
 const encryption = require('../utilities/encryption')
 const User = require('mongoose').model('User')
-// const Thread = require('mongoose').model('Thread')
+const Car = require('mongoose').model('Car')
+const Part = require('mongoose').model('Part')
+const Comment = require('mongoose').model('Comment')
 const errorHandler = require('../utilities/error-handler')
+const fs = require('fs')
 
 module.exports = {
   registerGet: (req, res) => {
@@ -171,6 +174,67 @@ module.exports = {
 
       })
   })
+},
+
+
+removeUserAccountById: (req, res) => {
+  let userId = req.params.id
+
+  User
+    .findByIdAndRemove(userId)
+    .then(user => {
+
+      let userProfileImagePath = `./public/images/UsersProfilesPictures/${userId}`;
+      
+                      fs.unlinkSync(userProfileImagePath, err => {
+                          if (err) {
+                              console.log(err.message);
+                          }
+                      });
+
+        for(let userCarAd of user.carAds){
+          Car
+            .findByIdAndRemove(userCarAd)
+            .then(car => {
+
+              let carImagePath = `./public/images/CarPictures/${carId}`;
+              
+                              fs.unlinkSync(carImagePath, err => {
+                                  if (err) {
+                                      console.log(err.message);
+                                  }
+                              });
+
+                for(let userPartAd of user.partAds){
+                    Part
+                      .findByIdAndRemove(userPartAd)
+                      .then(part => {
+                          for(let userComment of user.comments){
+                            Comment
+                              .findByIdAndRemove(userComment)
+                              .then(
+                                res.redirect('/')
+                              )
+                            }
+                            
+                          })
+                        }
+                        
+                      })
+                      
+
+        }
+
+
+
+
+
+    })
+
+   
+    res.redirect('/')
 }
+
+
 
 }
