@@ -73,53 +73,52 @@ module.exports = {
     res.redirect('/')
   },
 
-  getUserProfil: (req, res) => {
-    // let userName = req.params.username
-    let id = req.user.id
-    let pageSize = 2
-    let page = parseInt(req.query.page) || 1
-    // console.log(id)
+  getUserProfile: (req, res) => {
 
-    // Thread
-    //           .find({'author': ObjectId('id')})
-    //           .then(thread => {
-    //             console.log(thread)
-    //             User
-    //                     .findById(id)
-    //                     .then(user => {
-    //                       res.render('users/profil', {
-    //                         thread: thread,
-    //                         user: user
-    //                       })
-    //                     })
-    //           })
+    let userId = req.params.id
 
     User
-          .findById(id)
-          .then(user => {
-            Thread
-                        .find({'author': id})
-                        .sort({'date': -1})
-                        .populate('answers')
-                        .skip((page - 1) * pageSize)
-                        .limit(pageSize)
-                        // .populate('answers')
-                        .then(thread => {
-                          // console.log(thread)
-                          res.render('users/profil', {
-                            thread: thread,
-                            user: user,
-                            hasPrev: page > 1,
-                            hasNext: thread.length > 0,
-                            nextPage: page + 1,
-                            prevPage: page - 1
-                          })
-                        })
-          })
-          .catch(err => {
-            let errMessage = errorHandler.handleMongooseError(err)
-            console.log(errMessage)
-          })
+        .findById(userId)
+        .populate('carAds')
+        .populate('partAds')
+        .populate('comments')
+        .then(user => {
+            res.render('users/profile', {
+              user: user
+            })
+        })
+    // let userName = req.params.username
+    // let id = req.user.id
+    // let pageSize = 2
+    // let page = parseInt(req.query.page) || 1
+    
+
+    // User
+    //       .findById(id)
+    //       .then(user => {
+    //         Thread
+    //                     .find({'author': id})
+    //                     .sort({'date': -1})
+    //                     .populate('answers')
+    //                     .skip((page - 1) * pageSize)
+    //                     .limit(pageSize)
+    //                     // .populate('answers')
+    //                     .then(thread => {
+    //                       // console.log(thread)
+    //                       res.render('users/profil', {
+    //                         thread: thread,
+    //                         user: user,
+    //                         hasPrev: page > 1,
+    //                         hasNext: thread.length > 0,
+    //                         nextPage: page + 1,
+    //                         prevPage: page - 1
+    //                       })
+    //                     })
+    //       })
+    //       .catch(err => {
+    //         let errMessage = errorHandler.handleMongooseError(err)
+    //         console.log(errMessage)
+    //       })
 
     // User
     //       .find({'username': userName})
@@ -132,5 +131,41 @@ module.exports = {
     //         let errMessage = errorHandler.handleMongooseError(err)
     //         console.log(errMessage)
     //       })
-  }
+  },
+
+  userSettingsGet: (req, res) => {
+    let userId = req.params.id
+
+    User
+      .findById(userId)
+      .then(user => {
+        res.render('users/settings', {
+          user: user
+        })
+      })
+  },
+
+  userUploadProfilePic: (req, res) => {
+    let userId = req.params.id
+
+    User
+      .findById(userId)
+      .then(user => {
+        let profileImagePath = `./public/images/UsersProfilesPictures/${userId}`;
+        let picture = req.files.profilePictureURL
+
+        user.profilePicture = profileImagePath
+        picture.mv(profileImagePath, err => {
+          if (err) {
+              console.log(err.message);
+          }
+
+          user.save()
+
+          res.redirect(`/users/profile/${userId}`)
+
+      })
+  })
+}
+
 }
