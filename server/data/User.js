@@ -13,7 +13,8 @@ let userSchema = new mongoose.Schema({
   roles: [String],
   carAds: [{type: ObjectId, ref: 'Car'}],
   partAds: [{type: ObjectId, ref: 'Part'}],
-  comments: [{type: ObjectId, ref: 'Comment'}]
+  comments: [{type: ObjectId, ref: 'Comment'}],
+  profilePicture: {type: String}
 });
 
 userSchema.method({
