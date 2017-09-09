@@ -47,6 +47,11 @@ module.exports = (app) => {
   app.get('/likeCar/:id', auth.isAuthenticated, controllers.cars.addLikeCarPOST);
   app.get('/likePart/:id', auth.isAuthenticated, controllers.parts.addLikePartPOST);
 
+  //User profile routes
+  app.get('/users/profile/:id', auth.isAuthenticated, controllers.users.getUserProfile)
+  app.get('/users/settings/:id', auth.isAuthenticated, controllers.users.userSettingsGet)
+  app.post('/users/uploadProfilePicture/:id', auth.isAuthenticated, controllers.users.userUploadProfilePic)
+
   app.all('*', (req, res) => {
     res.status(404);
     res.send('404 Not found');
