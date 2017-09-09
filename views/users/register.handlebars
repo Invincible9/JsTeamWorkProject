@@ -1,8 +1,8 @@
-
-
         <div class="jumbotron">
-
             <form action="/users/register" method="POST">
+                {{#each errorMessages}}
+                    <div class="alert alert-danger">{{this}}</div>
+                {{/each}}
 
                 <div class="form-group">
                 <label for="username">Username:</label><br />  
@@ -26,6 +26,4 @@
 
                 <input class="btn btn-default" type="submit" value="Register" />
             </form>
-        </div>
-
-    
+        </div>    

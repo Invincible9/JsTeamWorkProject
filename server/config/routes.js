@@ -13,7 +13,7 @@ module.exports = (app) => {
   app.post('/users/logout', controllers.users.logout);
 
   // Cars routes
-  app.get('/cars/:id', auth.isAuthenticated, controllers.cars.getCarById );
+  app.get('/cars/:id', auth.isAuthenticated, controllers.cars.getCarById);
 
   app.get('/createAdCar', auth.isAuthenticated, controllers.cars.createAdCarGET);
   app.post('/createAdCar', auth.isAuthenticated, controllers.cars.createAdCarPOST);
@@ -48,13 +48,19 @@ module.exports = (app) => {
   app.get('/likePart/:id', auth.isAuthenticated, controllers.parts.addLikePartPOST);
 
   //User profile routes
-  app.get('/users/profile/:id', auth.isAuthenticated, controllers.users.getUserProfile)
-  app.get('/users/settings/:id', auth.isAuthenticated, controllers.users.userSettingsGet)
-  app.post('/users/uploadProfilePicture/:id', auth.isAuthenticated, controllers.users.userUploadProfilePic)
+  app.get('/users/profile/:id', auth.isAuthenticated, controllers.users.getUserProfile);
+  app.get('/users/settings/:id', auth.isAuthenticated, controllers.users.userSettingsGet);
+  app.post('/users/uploadProfilePicture/:id', auth.isAuthenticated, controllers.users.userUploadProfilePic);
 
-  app.all('*', (req, res) => {
+  // Error handling invalid rrl
+  app.use((req, res) => {
     res.status(404);
-    res.send('404 Not found');
-    res.end()
-  })
+    res.render('home/error');
+  });
+
+  // Error handling invalid url with params: example ':id'
+  app.use((err, req, res, next) => {
+    res.status(404);
+    res.render('home/error');
+  });
 };

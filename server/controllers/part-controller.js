@@ -88,12 +88,11 @@ module.exports = {
             })
     },
 
-    getPartById: (req, res) => {
+    getPartById: (req, res, next) => {
         let partId = req.params.id;
         let authorId = res.locals.currentUser.id;
 
-        Part
-            .findById(partId)
+        Part.findById(partId)
             .populate('author')
             .populate('comments')
             .then(part => {
@@ -116,15 +115,15 @@ module.exports = {
                 res.render('parts/partDetail', {
                     part:part
                 })
-            })
+            }).catch(next)
     },
 
-    editPartByIdGET: (req, res) => {
+    editPartByIdGET: (req, res, next) => {
         let partId = req.params.id;
 
         Part.findById(partId).then(part => {
             res.render('parts/editPart', {part: part})
-        })
+        }).catch(next);
     },
 
     editPartByIdPOST: (req, res) => {

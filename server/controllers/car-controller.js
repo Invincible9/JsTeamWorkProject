@@ -61,12 +61,11 @@ module.exports = {
         res.redirect('/')
     },
 
-    getCarById: (req, res) => {
+    getCarById: (req, res, next) => {
         let carId = req.params.id;
         let authorId = res.locals.currentUser.id;
 
-        Car
-            .findById(carId)
+        Car.findById(carId)
             .populate('comments')
             .populate('author')
             .then(car => {
@@ -86,23 +85,17 @@ module.exports = {
                 car.views = ++countView;
                 car.save();
 
-                res.render('cars/carDetail', {
-                    car: car
-                })
-            })
-
+                res.render('cars/carDetail', {car: car});
+            }).catch(next);
     },
 
-    editCarByIdGET: (req, res) => {
+    editCarByIdGET: (req, res, next) => {
         let carId = req.params.id;
 
-        Car
-            .findById(carId)
-            .then(car => {
-                res.render('cars/editCar', {
-                    car: car
-                })
-            })
+        Car.findById(carId).then(car => {
+                res.render('cars/editCar', {car: car})
+        })
+        .catch(next);
     },
 
     editCarByIdPOST: (req, res) => {
@@ -134,26 +127,25 @@ module.exports = {
         let carDescriptionUpdated = reqBody.description;
         let adAuthorUpdated = res.locals.currentUser.id;
 
-        Car
-            .findById(carId)
-            .then(car => {
-                car.model = carModelUpdated,
-                    car.price = carPriceUpdated,
-                    car.distanceTraveled = carDistanceTravelledUpdated,
-                    car.dateOfManufacture = carDateOfManufactureUpdated,
-                    car.engine = carEngineUpdated,
-                    car.power = carPowerUpdated,
-                    car.transmission = carTransmissionUpdated,
-                    car.color = carColorUpdated,
-                    car.pictureURL = carPictureUpdated || car.pictureURL,
-                    car.location = carLocationUpdated,
-                    car.date = Date.now();
-                car.author = adAuthorUpdated,
-                    car.description = carDescriptionUpdated
-                car.save()
+        Car.findById(carId).then(car => {
+            car.model = carModelUpdated,
+            car.price = carPriceUpdated,
+            car.distanceTraveled = carDistanceTravelledUpdated,
+            car.dateOfManufacture = carDateOfManufactureUpdated,
+            car.engine = carEngineUpdated,
+            car.power = carPowerUpdated,
+            car.transmission = carTransmissionUpdated,
+            car.color = carColorUpdated,
+            car.pictureURL = carPictureUpdated || car.pictureURL,
+            car.location = carLocationUpdated,
+            car.date = Date.now();
+            car.author = adAuthorUpdated,
+            car.description = carDescriptionUpdated
 
-                res.redirect('/')
-            })
+            car.save()
+
+            res.redirect('/')
+        });
     },
 
     deleteCarByIdPOST: (req, res) => {

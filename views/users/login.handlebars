@@ -1,6 +1,10 @@
 <div class="container-fluid">
     <div class="jumbotron">
     <form action="/users/login" method="POST">
+        {{#if errorMessage}}
+            <div class="alert alert-danger">{{errorMessage}}</div>
+        {{/if}}
+    
         <div class="form-group">
             <label for="username">Username:</label>
             <input class="form-control" type="text" name="username" placeholder="Username" /><br />

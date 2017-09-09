@@ -11,61 +11,69 @@ module.exports = {
   registerPost: (req, res) => {
     let reqUser = req.body
 
-    // add validations
-    // (if reqUser.username.length < 3)...
+    let errorMessages = [];    
+    
+    if (reqUser.username.length < 5) {
+      errorMessages.push("Username needs to be atleast 5 characters");
+    }
+    if (reqUser.password.length < 6) {
+      errorMessages.push("Password is too weak");
+    }
 
-    let salt = encryption.generateSalt()
-    let hashedPassword = encryption.generateHashedPassword(salt, reqUser.password)
+    if (errorMessages.length > 0) {
+      reqUser.errorMessages = errorMessages;
+      res.render('users/register', reqUser);
+    } else {
+      let salt = encryption.generateSalt()
+      let hashedPassword = encryption.generateHashedPassword(salt, reqUser.password)
+  
+      User.create({
+        username: reqUser.username,
+        firstName: reqUser.firstName,
+        lastName: reqUser.lastName,
+        salt: salt,
+        hashedPass: hashedPassword,
+        carAds: [],
+        partAds: [],
+        comments: []
+      }).then(user => {
+        req.logIn(user, (err, user) => {
+          if (err) {
+            errorMessages.push(err);
+            user.errorMessage = errorMessages;
 
-    User.create({
-      username: reqUser.username,
-      firstName: reqUser.firstName,
-      lastName: reqUser.lastName,
-      salt: salt,
-      hashedPass: hashedPassword,
-      carAds: [],
-      partAds: [],
-      comments: []
-    }).then(user => {
-      req.logIn(user, (err, user) => {
-        if (err) {
-          res.locals.globalError = err
-          res.render('users/register', user)
-        }
-
-        res.redirect('/')
-      })
-    })
+            res.render('users/register', user)
+          }
+  
+          res.redirect('/')
+        });
+      }); 
+    }
   },
+
   loginGet: (req, res) => {
     res.render('users/login')
   },
 
   loginPost: (req, res) => {
     let reqUser = req.body
-    User
-      .findOne({ username: reqUser.username }).then(user => {
-        if (!user) {
-          res.locals.globalError = 'Invalid user data'
-          res.render('users/login')
-          return
-        }
-
-        if (!user.authenticate(reqUser.password)) {
-          res.locals.globalError = 'Invalid user data'
-          res.render('users/login')
-          return
+    
+    User.findOne({ username: reqUser.username }).then(user => {
+        if (!user || !user.authenticate(reqUser.password)) {
+          let errorMessage = 'Invalid user data';
+          res.render('users/login', {errorMessage: errorMessage});
+          return;
         }
 
         req.logIn(user, (err, user) => {
           if (err) {
-            res.locals.globalError = err
-            res.render('users/login')
+            let errorMessage = err;
+            res.render('users/login', {errorMessage: errorMessage});
           }
 
-          res.redirect('/')
-        })
-      })
+          res.redirect('/');
+        });
+      });
   },
 
   logout: (req, res) => {
@@ -73,20 +81,17 @@ module.exports = {
     res.redirect('/')
   },
 
-  getUserProfile: (req, res) => {
+  getUserProfile: (req, res, next) => {
 
     let userId = req.params.id
 
-    User
-        .findById(userId)
+    User.findById(userId)
         .populate('carAds')
         .populate('partAds')
         .populate('comments')
         .then(user => {
-            res.render('users/profile', {
-              user: user
-            })
-        })
+            res.render('users/profile', {user: user});
+        }).catch(next);
     // let userName = req.params.username
     // let id = req.user.id
     // let pageSize = 2
