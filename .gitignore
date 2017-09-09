@@ -49,4 +49,5 @@ package-lock.json
 # Pics ignore
 public/images/CarPictures
 public/images/PartPictures
+public/images/UsersProfilesPictures
 
