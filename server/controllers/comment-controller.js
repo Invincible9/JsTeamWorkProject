@@ -69,17 +69,28 @@ module.exports = {
 
     // CAR Routes - Edit and Delete
     deleteCarCommentByAuthorGET: (req, res) => {
+        let authorID = res.locals.currentUser.id;
         let commentId = req.params.id;
         let carID = req.headers.referer.substring(req.headers.referer.lastIndexOf('/') + 1);
 
-        Comment.findByIdAndRemove(commentId).then(
-            Car.findById(carID).then(car => {
-                let index = car.comments.indexOf(commentId);
-                car.comments.splice(index, 1);
-                car.save();
+        Comment.findByIdAndRemove(commentId).then(comment => {
 
+                Car.findById(carID).then(car => {
+                    let index = car.comments.indexOf(commentId);
+                    car.comments.splice(index, 1);
+                    car.save();
+                });
+
+                User.findById(authorID).then(comment => {
+                    let index = comment.comments.indexOf(commentId);
+                    comment.comments.splice(index, 1);
+                    comment.save();
+                });
                 res.redirect(`/cars/${carID}`);
-            }));
+            }
+        );
+
+
     },
 
     editCarCommentByAuthorGET: (req, res) => {
@@ -119,17 +130,26 @@ module.exports = {
 
     deletePartCommentByAuthorGET: (req, res) => {
         let commentId = req.params.id;
+        let authorID = res.locals.currentUser.id;
         let partID = req.headers.referer.substring(req.headers.referer.lastIndexOf('/') + 1);
+        console.log(commentId);
 
-        Comment.findByIdAndRemove(commentId).then(
+        Comment.findByIdAndRemove(commentId).then(comment => {
 
-            Part.findById(partID).then(part => {
-                let index = part.comments.indexOf(commentId);
-                part.comments.splice(index, 1);
-                part.save();
+                Part.findById(partID).then(part => {
+                    let index = part.comments.indexOf(commentId);
+                    part.comments.splice(index, 1);
+                    part.save();
+                });
 
+                User.findById(authorID).then(comment => {
+                    let index = comment.comments.indexOf(commentId);
+                    comment.comments.splice(index, 1);
+                    comment.save();
+                });
                 res.redirect(`/parts/${partID}`);
-            }));
+            }
+        );
     },
 
     editPartCommentByAuthorGET: (req, res) => {
@@ -164,10 +184,6 @@ module.exports = {
         });
 
     }
-
-
-
-
 
 
 };

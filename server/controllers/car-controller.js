@@ -85,7 +85,11 @@ module.exports = {
                 car.views = ++countView;
                 car.save();
 
-                res.render('cars/carDetail', {car: car});
+                res.render('cars/carDetail',
+                    {
+                        car: car
+
+                    });
             }).catch(next);
     },
 
