@@ -52,9 +52,19 @@ module.exports = (app) => {
   app.get('/users/settings/:id', auth.isAuthenticated, controllers.users.userSettingsGet);
   app.post('/users/uploadProfilePicture/:id', auth.isAuthenticated, controllers.users.userUploadProfilePic);
   app.get('/users/deleteProfile/:id', auth.isAuthenticated, controllers.users.removeUserAccountById);
-  
 
-  // Error handling invalid rrl
+  // Delete And Edit Comments Routes - Car
+  app.get('/deleteCarCommentByAuthor/:id', auth.isAuthenticated, controllers.comments.deleteCarCommentByAuthorGET);
+  app.get('/editCarCommentByAuthor/:id', auth.isAuthenticated, controllers.comments.editCarCommentByAuthorGET);
+  app.post('/editCarCommentByAuthor/:id', auth.isAuthenticated, controllers.comments.editCarCommentByAuthorPOST);
+
+  // Delete And Edit Comments Routes - Part
+  app.get('/deletePartCommentByAuthor/:id', auth.isAuthenticated, controllers.comments.deletePartCommentByAuthorGET);
+  app.get('/editPartCommentByAuthor/:id', auth.isAuthenticated, controllers.comments.editPartCommentByAuthorGET);
+  app.post('/editPartCommentByAuthor/:id', auth.isAuthenticated, controllers.comments.editPartCommentByAuthorPOST);
+
+
+    // Error handling invalid rrl
   app.use((req, res) => {
     res.status(404);
     res.render('home/error');

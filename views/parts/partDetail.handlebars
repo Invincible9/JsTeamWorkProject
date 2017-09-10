@@ -101,9 +101,11 @@
                             Availability: {{part.availability}}<br/>
                             location: {{part.location}}<br/>
                             {{#if part.rightToVoteUp}}
-                                Like: <a href="/likePart/{{part.id}}"><span class="glyphicon glyphicon-thumbs-up"></span></a>
-                                {{else}}
-                                Like: <a href="/likePart/{{part.id}}" onclick="return false;"><span class="glyphicon glyphicon-thumbs-up" style="color: red"></span></a>
+                                Like: <a href="/likePart/{{part.id}}"><span
+                                    class="glyphicon glyphicon-thumbs-up"></span></a>
+                            {{else}}
+                                Like: <a href="/likePart/{{part.id}}" onclick="return false;"><span
+                                    class="glyphicon glyphicon-thumbs-up" style="color: red"></span></a>
                             {{/if}}
 
                             <!-- TO ADD COMMENTS LATER -->
@@ -142,7 +144,16 @@
                     <div class="col-md-12 animate-box">
                         <blockquote>
                             {{#each part.comments}}
-                                <p>&ldquo;{{this.comment}}&rdquo; <cite>&mdash; {{this.name}}</cite></p>
+                                <p class="CommentID" id="{{_id}}">&ldquo;{{this.comment}}&rdquo;
+                                    <a class="spanTrash" style="float: right" href="/deletePartCommentByAuthor/{{_id}}"><span class="glyphicon glyphicon-trash"></span></a>
+                                    <a class="spanPencil" style="float: right" href="/editPartCommentByAuthor/{{_id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+
+                                    <cite>&mdash; {{this.name}}</cite>
+
+                                    <input type="hidden" value="{{this.comment}}" class="valueComment">
+                                    <input type="hidden" value="{{_id}}" class="commentID">
+
+                                </>
                             {{/each}}
                         </blockquote>
                     </div>
@@ -172,59 +183,53 @@
 
                     </div>
                 </div>
-
-                {{!-- <div class="row rp-b">
-                    <div class="col-lg-6 col-lg-push-6 col-md-12 col-md-push-0 animate-box">
-                        <figure>
-                            <img src="images/pic_4.jpg" alt="Free HTML5 Bootstrap Template by FREEHTML5.co" class="img-responsive">
-                            <figcaption>This is a sweet image caption. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</figcaption>
-                        </figure>
-                    </div>
-                    <div class="col-lg-6 col-lg-pull-6 col-md-12 col-md-pull-0 cp-r animate-box">
-                        <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar. The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text didn’t listen. </p>
-
-                        <p>She packed her seven versalia, put her initial into the belt and made herself on the way. When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
-
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large <a href="#">language</a> ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                    </div>
-                </div> --}}
-
-                {{!-- <div class="row">
-                    <div class="col-md-12 animate-box">
-                        <h2>Pointing has no control about the blind texts</h2>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large <a href="#">language</a> ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                        <p>She packed her seven versalia, put her initial into the belt and made herself on the way. When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
-                    </div>
-                    <div class="col-md-4 animate-box">
-                        <figure>
-                            <img src="images/pic_5.jpg" alt="Free HTML5 Bootstrap Template by FREEHTML5.co" class="img-responsive">
-                            <figcaption>This is a sweet image caption. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</figcaption>
-                        </figure>
-                    </div>
-                    <div class="col-md-4 animate-box">
-                        <figure>
-                            <img src="images/pic_6.jpg" alt="Free HTML5 Bootstrap Template by FREEHTML5.co" class="img-responsive">
-                            <figcaption>This is a sweet image caption. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</figcaption>
-                        </figure>
-                    </div>
-                    <div class="col-md-4 animate-box">
-                        <figure>
-                            <img src="images/pic_7.jpg" alt="Free HTML5 Bootstrap Template by FREEHTML5.co" class="img-responsive">
-                            <figcaption>This is a sweet image caption. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</figcaption>
-                        </figure>
-                    </div>
-                    <div class="col-md-12 animate-box">
-                        <h2>Pointing has no control about the blind texts</h2>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large <a href="#">language</a> ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                        <p>She packed her seven versalia, put her initial into the belt and made herself on the way. When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
-                    </div>
-                </div> --}}
-
-
             </div>
         </article>
     </div>
 </div>
+
+<!---  Modal for part delete -->
+<div id="confirm-delete-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" style="text-align: center;">
+                <span>Are you sure you want to delete this comment?</span><br/>
+                <span>This action will be permanent.</span>
+            </div>
+            <div class="modal-footer" style="text-align: center; ">
+                <button id="close-delete" class="btn btn-default" style="margin-right: 15px">Cancel</button>
+                <a href="/deletePartCommentByAuthor/{{part._id}}">
+                    <button class="btn btn-danger delete-btn-confirm">Delete</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!---  End Modal  -->
+
+<!--<div id="confirm-edit-modal" class="modal fade" role="dialog">-->
+    <!--<div class="modal-dialog">-->
+        <!--<div class="modal-content">-->
+            <!--<div class="modal-body" style="text-align: center;">-->
+                <!--<span><strong>Edit Comment</strong></span><br/>-->
+            <!--</div>-->
+            <!--<div class="modal-body" style="text-align: center;">-->
+                <!--<form method="post" action="/editCarCommentByAuthor/{{car.comment._id}}">-->
+                <!--<textarea cols="5" class="form-control" name="commentA" id="commentArea" rows="5"-->
+          <!--required="required"></textarea><br/>-->
+                <!--</form>-->
+            <!--</div>-->
+            <!--<div class="modal-footer" style="text-align: center; ">-->
+                <!--<button id="close-edit" class="btn btn-default" style="margin-right: 15px">Cancel</button>-->
+                <!--<a href="/editCommentByAuthorCar/{{car._id}}">-->
+                    <!--<button class="btn btn-success edit-btn-confirm">Save Changes</button>-->
+                <!--</a>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!---  End Modal  -->
+
 
 <footer id="fh5co-footer">
     <p>
@@ -233,6 +238,52 @@
             Demo Images: <a href="http://unsplash.com/" target="_blank">Unsplash</a></small>
     </p>
 </footer>
+
+
+<script>
+    let value = $('.valueComment').val();
+    $('#commentArea').text(value);
+</script>
+
+<script>
+    $(document).ready(function () {
+
+        $('.spanTrash').on('click', function (e) {
+            e.preventDefault();
+
+            let commentId = $('.commentID').val();
+
+            $('.delete-btn-confirm').attr('id', commentId);
+
+            $('#confirm-delete-modal').modal('show');
+        });
+
+        $('#close-delete').on('click', (e) => {
+            $('#confirm-delete-modal').modal('hide');
+        });
+    });
+</script>
+
+
+<script>
+
+    //    $(document).ready(function () {
+    //        $('.spanPencil').on('click', function (e) {
+    ////            e.preventDefault();
+    //
+    //            let commentId = $('.commentID').val();
+    //            console.log(commentId)
+    //
+    //            $('.edit-btn-confirm').attr('id', commentId);
+    //
+    //            $('#confirm-edit-modal').modal('show');
+    //        });
+    //
+    //        $('#close-edit').on('click', (e) => {
+    //            $('#confirm-edit-modal').modal('hide');
+    //        });
+    //    });
+</script>
 
 </body>
     
