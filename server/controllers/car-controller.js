@@ -152,13 +152,13 @@ module.exports = {
         });
     },
 
-    deleteCarByIdPOST: (req, res) => {
+    deleteCarByIdGET: (req, res) => {
         let carId = req.params.id;
 
         Car.findByIdAndRemove(carId).then(car => {
             let author = car.author;
 
-            if (car.pictureUrl != undefined) {
+            if (car.pictureURL != undefined) {
                 let carImagePath = `./public/images/CarPictures/${carId}`;
 
                 fs.unlinkSync(carImagePath, err => {

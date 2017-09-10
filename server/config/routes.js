@@ -21,7 +21,7 @@ module.exports = (app) => {
   app.get('/editCar/:id', auth.isAuthenticated, controllers.cars.editCarByIdGET);
   app.post('/editCar/:id', auth.isAuthenticated, controllers.cars.editCarByIdPOST);
 
-  app.post('/deleteCar/:id', auth.isAuthenticated, controllers.cars.deleteCarByIdPOST);
+  app.get('/deleteCar/:id', auth.isAuthenticated, controllers.cars.deleteCarByIdGET);
 
   // Parts routes
   app.get('/parts/:id', auth.isAuthenticated, controllers.parts.getPartById);
@@ -32,7 +32,7 @@ module.exports = (app) => {
   app.get('/editPart/:id', auth.isAuthenticated, controllers.parts.editPartByIdGET);
   app.post('/editPart/:id', auth.isAuthenticated, controllers.parts.editPartByIdPOST);
 
-  app.post('/deletePart/:id', auth.isAuthenticated, controllers.parts.deletePartByIdPOST);
+  app.get('/deletePart/:id', auth.isAuthenticated, controllers.parts.deletePartByIdGET);
 
   app.get('/listAllParts', controllers.parts.listAllPartsGET);
   

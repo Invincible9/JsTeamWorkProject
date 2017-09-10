@@ -115,9 +115,9 @@
                 <span>Are you sure you want to delete this part?</span><br />
                 <span>This action will be permanent.</span>
             </div>
-            <div class="modal-footer" style="text-align: center; ">
-                <button id="close-delete" class="btn btn-default" style="margin-right: 15px">Cancel</button>
-                <button class="btn btn-danger delete-btn-confirm">Delete</button>
+            <div class="modal-footer" style="text-align: center;" id="deleteForm">
+                <!--<button id="close-delete" class="btn btn-default" style="margin-right: 15px">Cancel</button>-->
+                <!--<button class="btn btn-danger delete-btn-confirm">Delete</button>-->
             </div>
         </div>
     </div>
@@ -132,34 +132,56 @@
     </p>
 </footer>
 <script>
-$(function () {
-    $('.delete-link').on('click', function(e) {
-        let carId = this.id;
-        $('.delete-btn-confirm').attr('id', carId);
 
-        $('#confirm-delete-modal').modal('show');
-    });
+    $(document).ready(function () {
+        $('.delete-link').on('click', function (e) {
+            e.preventDefault();
+            let str = this.id;
 
-    $('.delete-btn-confirm').on('click',function(e) {
-        let carId = this.id;
-        
-        $.ajax({
-            type: 'POST',
-            url: `/deleteCar/${carId}`,
-            success: () => {
-                $('#confirm-delete-modal').modal('hide');
-                location.reload();  
-            },
-            error: (err) => {
-                console.log(err);
-            }
+            $('.delete-btn-confirm').attr('id', str);
+
+            $('#confirm-delete-modal').modal('show');
+
+            $('#deleteForm').empty();
+            let hrefAddress = `/deleteCar/${str}`;
+            let href = $(`<a href="/parts" class="btn btn-default" style="margin-right: 15px">Cancel</a>
+                  <a href="${hrefAddress}"><input class="btn btn-danger delete-btn-confirm" value="Delete" /></a>`);
+            $('#deleteForm').append(href);
+        });
+
+        $('#close-delete').on('click', (e) => {
+            $('#confirm-delete-modal').modal('hide');
         });
     });
 
-    $('#close-delete').on('click', (e) => {
-        $('#confirm-delete-modal').modal('hide');
-    });
-});
+
+//    $('.delete-link').on('click', function(e) {
+//        let carId = this.id;
+//        $('.delete-btn-confirm').attr('id', carId);
+//
+//        $('#confirm-delete-modal').modal('show');
+//    });
+//
+//    $('.delete-btn-confirm').on('click',function(e) {
+//        let carId = this.id;
+//
+//        $.ajax({
+//            type: 'POST',
+//            url: `/deleteCar/${carId}`,
+//            success: () => {
+//                $('#confirm-delete-modal').modal('hide');
+//                location.reload();
+//            },
+//            error: (err) => {
+//                console.log(err);
+//            }
+//        });
+//    });
+//
+//    $('#close-delete').on('click', (e) => {
+//        $('#confirm-delete-modal').modal('hide');
+//    });
+//});
 </script>
 </body>
 </html>

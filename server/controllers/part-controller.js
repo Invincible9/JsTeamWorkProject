@@ -167,13 +167,14 @@ module.exports = {
 
     },
 
-    deletePartByIdPOST: (req, res) => {
+    deletePartByIdGET: (req, res) => {
+
         let partId = req.params.id;
 
         Part.findByIdAndRemove(partId).then(part => {
             let author = part.author;
 
-            if (part.pictureUrl != undefined) {
+            if (part.pictureURL != undefined) {
                 let partImagePath = `./public/images/partPictures/${partId}`;
 
                 fs.unlinkSync(partImagePath, err => {
