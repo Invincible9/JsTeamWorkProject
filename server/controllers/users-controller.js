@@ -15,43 +15,48 @@ module.exports = {
     let reqUser = req.body
 
     let errorMessages = [];    
-    
-    if (reqUser.username.length < 5) {
-      errorMessages.push("Username needs to be atleast 5 characters");
-    }
-    if (reqUser.password.length < 6) {
-      errorMessages.push("Password is too weak");
-    }
+    User.findOne({username: reqUser.username}).then(user => {
+		if (user) {
+			console.log(user)
+			errorMessages.push('Username is already taken');
+		}
+		if (reqUser.username.length < 5) {
+      		errorMessages.push("Username needs to be atleast 5 characters");
+      	}
+		if (reqUser.password.length < 6) {
+			errorMessages.push("Password is too weak");
+		}
 
-    if (errorMessages.length > 0) {
-      reqUser.errorMessages = errorMessages;
-      res.render('users/register', reqUser);
-    } else {
-      let salt = encryption.generateSalt()
-      let hashedPassword = encryption.generateHashedPassword(salt, reqUser.password)
-  
-      User.create({
-        username: reqUser.username,
-        firstName: reqUser.firstName,
-        lastName: reqUser.lastName,
-        salt: salt,
-        hashedPass: hashedPassword,
-        carAds: [],
-        partAds: [],
-        comments: []
-      }).then(user => {
-        req.logIn(user, (err, user) => {
-          if (err) {
-            errorMessages.push(err);
-            user.errorMessage = errorMessages;
+		if (errorMessages.length > 0) {
+			reqUser.errorMessages = errorMessages;
+			res.render('users/register', reqUser);
+			return;
+		} else {
+			let salt = encryption.generateSalt()
+			let hashedPassword = encryption.generateHashedPassword(salt, reqUser.password)
 
-            res.render('users/register', user)
-          }
-  
-          res.redirect('/')
-        });
-      }); 
-    }
+			let userObject = {
+				username: reqUser.username,
+				firstName: reqUser.firstName,
+				lastName: reqUser.lastName,
+				salt: salt,
+				hashedPass: hashedPassword
+			};
+
+			User.create(userObject).then(user => {
+				req.logIn(user, (err, user) => {
+					if (err) {
+						errorMessages.push(err);
+						user.errorMessage = errorMessages;
+
+						res.render('users/register', user)
+					}
+
+					res.redirect('/')
+				});
+			});
+		}
+	});
   },
 
   loginGet: (req, res) => {

@@ -17,8 +17,6 @@ module.exports = (settings) => {
       throw err
     }
 
-    console.log('MongoDB Ready')
-
     User.seedAdminUser()
   })
 

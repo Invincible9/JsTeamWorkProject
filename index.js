@@ -11,3 +11,5 @@ require('./server/config/passport')()
 
 app.listen(settings.port)
 console.log(`Server listen on port ${settings.port}`)
+
+module.exports = app;
