@@ -151,23 +151,23 @@
                             {{#each car.comments}}
                                 <p class="CommentID" id="{{_id}}">&ldquo;{{this.comment}}&rdquo;
 
-                                    
-                                {{#if this.rightToEditPost}}
-                                    <a class="spanTrash" style="float: right"
-                                       href="/deleteCarCommentByAuthor/{{_id}}"><span
-                                            class="glyphicon glyphicon-trash"></span></a>
-                                    <a class="spanPencil" style="float: right"
-                                       href="/editCarCommentByAuthor/{{_id}}"><span
-                                            class="glyphicon glyphicon-pencil"></span></a>
-                                            {{else if ../isAdmin}}
-                                                <a class="spanTrash" style="float: right"
-                                       href="/deleteCarCommentByAuthor/{{_id}}"><span
-                                            class="glyphicon glyphicon-trash"></span></a>
-                                    <a class="spanPencil" style="float: right"
-                                       href="/editCarCommentByAuthor/{{_id}}"><span
-                                            class="glyphicon glyphicon-pencil"></span></a>
 
-                                {{/if}}            
+                                    {{#if this.rightToEditPost}}
+                                        <a class="spanTrash" style="float: right"
+                                           href="/deleteCarCommentByAuthor/{{_id}}"><span
+                                                class="glyphicon glyphicon-trash"></span></a>
+                                        <a class="spanPencil" style="float: right"
+                                           href="/editCarCommentByAuthor/{{_id}}"><span
+                                                class="glyphicon glyphicon-pencil"></span></a>
+                                    {{else if ../isAdmin}}
+                                        <a class="spanTrash" style="float: right"
+                                           href="/deleteCarCommentByAuthor/{{_id}}"><span
+                                                class="glyphicon glyphicon-trash"></span></a>
+                                        <a class="spanPencil" style="float: right"
+                                           href="/editCarCommentByAuthor/{{_id}}"><span
+                                                class="glyphicon glyphicon-pencil"></span></a>
+
+                                    {{/if}}
 
                                     <cite>&mdash; {{this.name}}</cite>
 
@@ -265,25 +265,25 @@
 <!---  End Modal  -->
 
 <!--<div id="confirm-edit-modal" class="modal fade" role="dialog">-->
-<!--<div class="modal-dialog">-->
-<!--<div class="modal-content">-->
-<!--<div class="modal-body" style="text-align: center;">-->
-<!--<span><strong>Edit Comment</strong></span><br/>-->
-<!--</div>-->
-<!--<div class="modal-body" style="text-align: center;">-->
-<!--<form method="post" action="/editCarCommentByAuthor/{{car.comment._id}}">-->
-<!--<textarea cols="5" class="form-control" name="commentA" id="commentArea" rows="5"-->
-<!--required="required"></textarea><br/>-->
-<!--</form>-->
-<!--</div>-->
-<!--<div class="modal-footer" style="text-align: center; ">-->
-<!--<button id="close-edit" class="btn btn-default" style="margin-right: 15px">Cancel</button>-->
-<!--<a href="/editCommentByAuthorCar/{{car._id}}">-->
-<!--<button class="btn btn-success edit-btn-confirm">Save Changes</button>-->
-<!--</a>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
+    <!--<div class="modal-dialog">-->
+        <!--<div class="modal-content">-->
+            <!--<div class="modal-body" style="text-align: center;">-->
+                <!--<span><strong>Edit Comment</strong></span><br/>-->
+            <!--</div>-->
+            <!--<div class="modal-body" style="text-align: center;">-->
+                <!--<form method="post" action="/editCarCommentByAuthor/{{car.comment._id}}">-->
+            <!--<textarea cols="5" class="form-control" name="commentA" id="commentArea" rows="5"-->
+          <!--required="required"></textarea><br/>-->
+                <!--</form>-->
+            <!--</div>-->
+            <!--<div class="modal-footer" style="text-align: center; ">-->
+                <!--<button id="close-edit" class="btn btn-default" style="margin-right: 15px">Cancel</button>-->
+                <!--<a href="/editCommentByAuthorCar/{{car._id}}">-->
+                    <!--<button class="btn btn-success edit-btn-confirm">Save Changes</button>-->
+                <!--</a>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
 <!--</div>-->
 <!---  End Modal  -->
 
