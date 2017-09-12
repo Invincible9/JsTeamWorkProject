@@ -64,6 +64,7 @@ module.exports = {
     getCarById: (req, res, next) => {
         let carId = req.params.id;
         let authorId = res.locals.currentUser.id;
+        
 
         Car.findById(carId)
             .populate('comments')
@@ -71,6 +72,25 @@ module.exports = {
             .then(car => {
 
                 let voteUp = true;
+                let rightToEditPost = false
+                let isNotAuthorOfAd = true
+
+                for(let comment of car.comments){
+                  
+                    if(comment.author == authorId){
+                        rightToEditPost = true
+
+                        comment.rightToEditPost = rightToEditPost
+                        // break
+                    }else{
+
+                        rightToEditPost = false
+                        comment.rightToEditPost = rightToEditPost
+                    }
+
+
+
+                }
 
                 for (let id of car.likes) {
                     if (id == authorId) {
@@ -81,9 +101,19 @@ module.exports = {
 
                 car.rightToVoteUp = voteUp;
 
+                if(car.author.username != res.locals.currentUser.username){
+                    isNotAuthorOfAd = true
+                }else{
+                    isNotAuthorOfAd = false
+                }
+                
+                car.isNotAuthorOfAd = isNotAuthorOfAd
+
                 let countView = car.views;
                 car.views = ++countView;
                 car.save();
+
+            
 
                 res.render('cars/carDetail',
                     {
