@@ -126,6 +126,7 @@
                             <p>Price: {{car.price}}</p>
                             <p>Distance: {{car.distanceTraveled}}km</p>
                             <p>Transmission: {{car.transmission}}</p>
+                            <p>Author: {{car.author.username}}</p>
                             <p>Views: {{car.views}}</p>
                             <p>Likes: {{car.likes.length}}</p>
 
@@ -149,12 +150,23 @@
                             {{#each car.comments}}
                                 <p class="CommentID" id="{{_id}}">&ldquo;{{this.comment}}&rdquo;
 
+                                    
+                                {{#if this.rightToEditPost}}
                                     <a class="spanTrash" style="float: right"
                                        href="/deleteCarCommentByAuthor/{{_id}}"><span
                                             class="glyphicon glyphicon-trash"></span></a>
                                     <a class="spanPencil" style="float: right"
                                        href="/editCarCommentByAuthor/{{_id}}"><span
                                             class="glyphicon glyphicon-pencil"></span></a>
+                                            {{else if ../isAdmin}}
+                                                <a class="spanTrash" style="float: right"
+                                       href="/deleteCarCommentByAuthor/{{_id}}"><span
+                                            class="glyphicon glyphicon-trash"></span></a>
+                                    <a class="spanPencil" style="float: right"
+                                       href="/editCarCommentByAuthor/{{_id}}"><span
+                                            class="glyphicon glyphicon-pencil"></span></a>
+
+                                {{/if}}            
 
                                     <cite>&mdash; {{this.name}}</cite>
 
@@ -168,7 +180,10 @@
                 </div>
 
                 <button class="btn btn-success" id="btnForm">Add Comment</button>
-                <button class="btn btn-info" id="btnMessage">Add Message</button>
+
+                {{#if car.isNotAuthorOfAd}}
+                    <button class="btn btn-info" id="btnMessage">Add Message</button>
+                {{/if}}
 
                 <div class="row rp-b">
                     <div class="col-lg-12 col-md-12 animate-box" id="commentForm">
