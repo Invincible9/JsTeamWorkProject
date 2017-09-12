@@ -12,10 +12,11 @@ module.exports = {
     },
 
     registerPost: (req, res) => {
-        let reqUser = req.body
+        let reqUser = req.body;
 
         let errorMessages = [];
         User.findOne({username: reqUser.username}).then(user => {
+
             if (user) {
                 console.log(user)
                 errorMessages.push('Username is already taken');
@@ -27,20 +28,26 @@ module.exports = {
                 errorMessages.push("Password is too weak");
             }
 
+            if(reqUser.password != reqUser.confirmPassword){
+                errorMessages.push("Password did not match");
+            }
+
             if (errorMessages.length > 0) {
                 reqUser.errorMessages = errorMessages;
                 res.render('users/register', reqUser);
-                return;
             } else {
-                let salt = encryption.generateSalt()
-                let hashedPassword = encryption.generateHashedPassword(salt, reqUser.password)
+                let salt = encryption.generateSalt();
+                let hashedPassword = encryption.generateHashedPassword(salt, reqUser.password);
 
                 let userObject = {
                     username: reqUser.username,
                     firstName: reqUser.firstName,
                     lastName: reqUser.lastName,
                     salt: salt,
-                    hashedPass: hashedPassword
+                    hashedPass: hashedPassword,
+                    roles: ['User'],
+                    isActive: true,
+                    email: reqUser.email
                 };
 
                 User.create(userObject).then(user => {
@@ -159,7 +166,7 @@ module.exports = {
     },
 
     userUploadProfilePic: (req, res) => {
-        let userId = req.params.id
+        let userId = req.params.id;
 
         User
             .findById(userId)
@@ -214,6 +221,7 @@ module.exports = {
                                 Part
                                     .findByIdAndRemove(userPartAd)
                                     .then(part => {
+
                                         for (let userComment of user.comments) {
                                             Comment
                                                 .findByIdAndRemove(userComment)

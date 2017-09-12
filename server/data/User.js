@@ -14,7 +14,9 @@ let userSchema = new mongoose.Schema({
   carAds: [{type: ObjectId, ref: 'Car'}],
   partAds: [{type: ObjectId, ref: 'Part'}],
   comments: [{type: ObjectId, ref: 'Comment'}],
-  profilePicture: {type: String}
+  profilePicture: {type: String},
+  isActive: {type: Boolean},
+  email: {type: String}
 });
 
 userSchema.method({

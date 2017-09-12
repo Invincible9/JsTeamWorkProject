@@ -5,6 +5,7 @@ const parts = require('../controllers/part-controller');
 const comments = require('../controllers/comment-controller');
 const search = require('../controllers/search-controller');
 const message = require('../controllers/message-controller');
+const admin = require('../controllers/admin-controller');
 
 module.exports = {
     home: home,
@@ -13,5 +14,6 @@ module.exports = {
     parts: parts,
     comments: comments,
     search: search,
-    message: message
+    message: message,
+    admin: admin
 }

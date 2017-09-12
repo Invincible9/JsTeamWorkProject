@@ -71,6 +71,15 @@ module.exports = (app) => {
   app.post('/messagePart/:id', auth.isAuthenticated, controllers.message.messagePartPOST);
   app.get('/deleteMessage/:id', auth.isAuthenticated, controllers.message.deleteMessageGET);
 
+  // Admin Panel Routes
+  app.get('/users/listAllUsers', auth.isAuthenticated, controllers.admin.listAllUsersGET);
+  app.get('/userDetails/:id', auth.isAuthenticated, controllers.admin.userDetailsGET);
+  app.get('/deleteUser/:id', auth.isAuthenticated, controllers.admin.deleteUserByIdGET);
+  app.get('/changePermissionUser/:id', auth.isAuthenticated, controllers.admin.changePermissionUserGET);
+  app.get('/banUser/:id', auth.isAuthenticated, controllers.admin.banUserGET);
+
+
+
 
 
 
