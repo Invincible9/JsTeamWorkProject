@@ -1,0 +1,101 @@
+<header>
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <!-- jQuery -->
+    <script src="/js/jquery.min.js"></script>
+    <!-- jQuery Easing -->
+    <script src="/js/jquery.easing.1.3.js"></script>
+    <!-- Bootstrap -->
+    <script src="/js/bootstrap.min.js"></script>
+    <!-- Waypoints -->
+    <script src="/js/jquery.waypoints.min.js"></script>
+    <!-- Main JS -->
+    <script src="/js/main.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</header>
+
+<div class="row rp-b">
+    <div class="col-md-12 animate-box fadeInUp animated">
+        <cite>&mdash; &ldquo;{{message.message}}&rdquo;</cite>
+        <a id="delMessage" href="/deleteMessage/{{message._id}}" style="float: right" class="btn btn-danger">Delete</a>
+        <a id="sendMessage" href="/sendMessageToSender/{{message.sender}}" style="float: right" class="btn btn-info">Add Message</a>
+        <hr/>
+    </div>
+</div>
+
+
+<!---  Modal for part delete -->
+<div id="confirm-delete-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" style="text-align: center;">
+                <span>Are you sure you want to delete this comment?</span><br/>
+                <span>This action will be permanent.</span>
+            </div>
+            <div class="modal-footer" style="text-align: center;" id="deleteForm">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!---  End Modal  -->
+
+
+<!---  End Modal  -->
+<div id="confirm-edit-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" style="text-align: center;">
+                <span><strong>Send Message</strong></span><br/>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <form method="post" action="/sendMessageToSender/{{message.sender}}" id="sendForm">
+                <textarea cols="5" class="form-control" name="message" id="commentArea" rows="5" required="required"></textarea><br/>
+                    <a href="/messageDetail/{{message._id}}" class="btn btn-default" style="margin-right: 15px">Cancel</a>
+                    <input type="submit" class="btn btn-danger delete-btn-success" value="Send" />
+                    <input type="hidden" value="{{message._id}}" name="messageID">
+                </form>
+            </div>
+            <div class="modal-footer" style="text-align: center;" id="sendForm">
+            </div>
+        </div>
+    </div>
+</div>
+<!---  End Modal  -->
+
+<script>
+    $(document).ready(function () {
+        $('#delMessage').on('click', function (e) {
+            e.preventDefault();
+            let str = e.currentTarget.href;
+            str = str.substring(str.lastIndexOf('/') + 1);
+
+            $('.send-btn-confirm').attr('id', str);
+
+            $('#confirm-delete-modal').modal('show');
+
+            $('#deleteForm').empty();
+            let url = `/deleteMessage/{{message._id}}`;
+            let href = $(`<a href="/messageDetail/{{message._id}}" class="btn btn-default" style="margin-right: 15px">Cancel</a>
+                  <a href="${url}"><input class="btn btn-danger delete-btn-confirm" value="Delete" /></a>`);
+            $('#deleteForm').append(href);
+        });
+
+        $('#close-delete').on('click', (e) => {
+            $('#confirm-delete-modal').modal('hide');
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#sendMessage').on('click', function (e) {
+            e.preventDefault();
+            $('#confirm-edit-modal').modal('show');
+        });
+
+        $('#close-delete').on('click', (e) => {
+            $('#confirm-edit-modal').modal('hide');
+        });
+    });
+</script>

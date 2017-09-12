@@ -162,7 +162,9 @@
                     </div>
                 </div>
 
+
                 <button class="btn btn-success" id="btnForm">Add Comment</button>
+                <button class="btn btn-info" id="btnMessage">Add Message</button>
 
                 <div class="row rp-b">
                     <div class="col-lg-12 col-md-12 animate-box" id="commentForm">
@@ -186,6 +188,39 @@
 
                     </div>
                 </div>
+
+                <input type="hidden" id="recipientID" value="{{part.author._id}}"/>
+                <input type="hidden" id="partID" value="{{part._id}}"/>
+
+                <div class="row rp-b">
+                    <div class="col-lg-12 col-md-12 animate-box" id="commentMessage">
+
+                        <script>
+                            let recipientId = $('#recipientID').val();
+                            $('#commentForm').hide();
+                            let url = `/messagePart/${recipientId}`;
+                            let partId = $('#partID').val();
+
+                            let formMessage = $(`
+                             <form class="form-group" method="post" action="${url}">
+                                 <label for="comment">Send Message:</label>
+                                 <textarea class="form-control" name="message" id="comment" rows="5" required="required"></textarea><br/>
+                                 <input class="btn btn-info" type="submit" value="Add Message"/>
+                                  <input type="hidden" value="${partId}" name="partID">
+                             </form>`);
+
+                            $('#commentMessage').append(formMessage);
+                            $('#commentMessage').hide();
+
+                            $('#btnMessage').on('click', function () {
+                                $('#commentMessage').toggle();
+                            });
+                        </script>
+
+                    </div>
+                </div>
+
+
             </div>
         </article>
     </div>

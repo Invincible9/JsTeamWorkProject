@@ -78,9 +78,7 @@ module.exports = {
                             part.rightToChangePost = rightToChangePost
                         }
                     }
-
                 }
-
 
                 res.render('parts/listAllParts', {
                     parts: parts
@@ -96,6 +94,22 @@ module.exports = {
             .populate('author')
             .populate('comments')
             .then(part => {
+
+                let currentUser = '';
+
+                if (res.locals.currentUser) {
+                    currentUser = res.locals.currentUser.id
+                }
+
+                let rightToChangePost = false;
+
+                if (part.author == currentUser) {
+                    rightToChangePost = true;
+                    part.rightToChangePostMessage = rightToChangePost
+                } else {
+                    rightToChangePost = false;
+                    part.rightToChangePostMessage = rightToChangePost
+                }
 
                 let voteUp = true;
 

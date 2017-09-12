@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const ObjectId = mongoose.Schema.Types.ObjectId
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 let carSchema = new mongoose.Schema({
     model: {type: String},

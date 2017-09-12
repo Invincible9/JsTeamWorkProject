@@ -149,8 +149,12 @@
                             {{#each car.comments}}
                                 <p class="CommentID" id="{{_id}}">&ldquo;{{this.comment}}&rdquo;
 
-                                    <a class="spanTrash" style="float: right" href="/deleteCarCommentByAuthor/{{_id}}"><span class="glyphicon glyphicon-trash"></span></a>
-                                    <a class="spanPencil" style="float: right" href="/editCarCommentByAuthor/{{_id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                                    <a class="spanTrash" style="float: right"
+                                       href="/deleteCarCommentByAuthor/{{_id}}"><span
+                                            class="glyphicon glyphicon-trash"></span></a>
+                                    <a class="spanPencil" style="float: right"
+                                       href="/editCarCommentByAuthor/{{_id}}"><span
+                                            class="glyphicon glyphicon-pencil"></span></a>
 
                                     <cite>&mdash; {{this.name}}</cite>
 
@@ -164,16 +168,19 @@
                 </div>
 
                 <button class="btn btn-success" id="btnForm">Add Comment</button>
+                <button class="btn btn-info" id="btnMessage">Add Message</button>
 
                 <div class="row rp-b">
                     <div class="col-lg-12 col-md-12 animate-box" id="commentForm">
 
                         <script>
+                            $('#commentMessage').hide();
+
                             let form = $(`
                             <form class="form-group" method="post" action="/addCarComment/{{car._id}}">
                                 <label for="comment">Comment:</label>
                                 <textarea class="form-control" name="comment" id="comment" rows="5" required="required"></textarea><br/>
-                                <input class="btn btn-info" type="submit" value="Add Comment"/>
+                                <input class="btn btn-success" type="submit" value="Add Comment"/>
                             </form>`);
 
                             $('#commentForm').append(form);
@@ -182,11 +189,43 @@
                             $('#btnForm').on('click', function () {
                                 $('#commentForm').toggle();
                             });
-
                         </script>
 
                     </div>
                 </div>
+
+                <input type="hidden" id="recipientID" value="{{car.author._id}}"/>
+                <input type="hidden" id="carID" value="{{car._id}}"/>
+
+                <div class="row rp-b">
+                    <div class="col-lg-12 col-md-12 animate-box" id="commentMessage">
+
+                        <script>
+                            let recipientId = $('#recipientID').val();
+                            $('#commentForm').hide();
+                            let url = `/messageCar/${recipientId}`;
+                            let carId = $('#carID').val();
+
+                            let formMessage = $(`
+                             <form class="form-group" method="post" action="${url}">
+                                 <label for="comment">Send Message:</label>
+                                 <textarea class="form-control" name="message" id="comment" rows="5" required="required"></textarea><br/>
+                                 <input class="btn btn-info" type="submit" value="Add Message"/>
+                                  <input type="hidden" value="${carId}" name="carID" />
+                             </form>`);
+
+                            $('#commentMessage').append(formMessage);
+                            $('#commentMessage').hide();
+
+                            $('#btnMessage').on('click', function () {
+                                $('#commentMessage').toggle();
+                            });
+                        </script>
+
+                    </div>
+                </div>
+
+
             </div>
         </article>
     </div>
@@ -210,41 +249,42 @@
 <!---  End Modal  -->
 
 <!--<div id="confirm-edit-modal" class="modal fade" role="dialog">-->
-    <!--<div class="modal-dialog">-->
-        <!--<div class="modal-content">-->
-            <!--<div class="modal-body" style="text-align: center;">-->
-                <!--<span><strong>Edit Comment</strong></span><br/>-->
-            <!--</div>-->
-            <!--<div class="modal-body" style="text-align: center;">-->
-                <!--<form method="post" action="/editCarCommentByAuthor/{{car.comment._id}}">-->
-                <!--<textarea cols="5" class="form-control" name="commentA" id="commentArea" rows="5"-->
-          <!--required="required"></textarea><br/>-->
-                <!--</form>-->
-            <!--</div>-->
-            <!--<div class="modal-footer" style="text-align: center; ">-->
-                <!--<button id="close-edit" class="btn btn-default" style="margin-right: 15px">Cancel</button>-->
-                <!--<a href="/editCommentByAuthorCar/{{car._id}}">-->
-                    <!--<button class="btn btn-success edit-btn-confirm">Save Changes</button>-->
-                <!--</a>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
+<!--<div class="modal-dialog">-->
+<!--<div class="modal-content">-->
+<!--<div class="modal-body" style="text-align: center;">-->
+<!--<span><strong>Edit Comment</strong></span><br/>-->
+<!--</div>-->
+<!--<div class="modal-body" style="text-align: center;">-->
+<!--<form method="post" action="/editCarCommentByAuthor/{{car.comment._id}}">-->
+<!--<textarea cols="5" class="form-control" name="commentA" id="commentArea" rows="5"-->
+<!--required="required"></textarea><br/>-->
+<!--</form>-->
+<!--</div>-->
+<!--<div class="modal-footer" style="text-align: center; ">-->
+<!--<button id="close-edit" class="btn btn-default" style="margin-right: 15px">Cancel</button>-->
+<!--<a href="/editCommentByAuthorCar/{{car._id}}">-->
+<!--<button class="btn btn-success edit-btn-confirm">Save Changes</button>-->
+<!--</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
 <!--</div>-->
 <!---  End Modal  -->
 
 
 <footer id="fh5co-footer">
     <p>
-        <small>&copy; 2016. Magazine Free HTML5. All Rights Reserverd. <br> Designed by <a href="http://freehtml5.co"
-                                                                                           target="_blank">FREEHTML5.co</a>
+        <small>&copy; 2016. Magazine Free HTML5. All Rights Reserverd. <br> Designed by <a
+                href="http://freehtml5.co"
+                target="_blank">FREEHTML5.co</a>
             Demo Images: <a href="http://unsplash.com/" target="_blank">Unsplash</a></small>
     </p>
 </footer>
 
 
 <!--<script>-->
-    <!--let value = $('.valueComment').val();-->
-    <!--$('#commentArea').text(value);-->
+<!--let value = $('.valueComment').val();-->
+<!--$('#commentArea').text(value);-->
 <!--</script>-->
 
 <script>

@@ -63,6 +63,16 @@ module.exports = (app) => {
   app.get('/editPartCommentByAuthor/:id', auth.isAuthenticated, controllers.comments.editPartCommentByAuthorGET);
   app.post('/editPartCommentByAuthor/:id', auth.isAuthenticated, controllers.comments.editPartCommentByAuthorPOST);
 
+  // Message Routes
+  app.get('/mailBox', auth.isAuthenticated, controllers.message.mailBoxGET);
+  app.get('/messageDetail/:id', auth.isAuthenticated, controllers.message.messageDetailGET);
+  app.post('/sendMessageToSender/:id', auth.isAuthenticated, controllers.message.sendMessageToSenderPOST);
+  app.post('/messageCar/:id', auth.isAuthenticated, controllers.message.messageCarPOST);
+  app.post('/messagePart/:id', auth.isAuthenticated, controllers.message.messagePartPOST);
+  app.get('/deleteMessage/:id', auth.isAuthenticated, controllers.message.deleteMessageGET);
+
+
+
 
     // Error handling invalid rrl
   app.use((req, res) => {

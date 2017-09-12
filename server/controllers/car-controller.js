@@ -87,8 +87,7 @@ module.exports = {
 
                 res.render('cars/carDetail',
                     {
-                        car: car
-
+                        car: car,
                     });
             }).catch(next);
     },
