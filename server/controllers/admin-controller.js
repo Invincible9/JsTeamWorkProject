@@ -36,6 +36,16 @@ module.exports = {
             .populate('comments')
             .then(user => {
 
+                let userIsAdmin = false;
+
+                if(user.roles[0] == 'Admin'){
+                    userIsAdmin = true;
+                }else{
+                    userIsAdmin = false;
+                }
+
+                user.userIsAdmin = userIsAdmin;
+
                 res.render('admins/userDetails',
                     {
                         user: user,
@@ -65,7 +75,7 @@ module.exports = {
                         .findByIdAndRemove(userCarAd)
                         .then(car => {
 
-                            let carImagePath = `./public/images/CarPictures/${carId}`;
+                            let carImagePath = `./public/images/CarPictures/${car._id}`;
 
                             fs.unlinkSync(carImagePath, err => {
                                 if (err) {
@@ -78,7 +88,7 @@ module.exports = {
                                     .findByIdAndRemove(userPartAd)
                                     .then(part => {
 
-                                        let partImagePath = `./public/images/partPictures/${carId}`;
+                                        let partImagePath = `./public/images/partPictures/${part._id}`;
 
                                         fs.unlinkSync(partImagePath, err => {
                                             if (err) {
@@ -90,7 +100,6 @@ module.exports = {
                                             Comment
                                                 .findByIdAndRemove(userComment)
                                                 .then(
-                                                    // res.redirect('/')
                                                 )
                                         }
                                     })

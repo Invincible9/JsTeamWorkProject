@@ -10,8 +10,8 @@
     <script src="/js/jquery.waypoints.min.js"></script>
     <!-- Main JS -->
     <script src="/js/main.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
 </header>
 
 <body>
@@ -32,6 +32,7 @@
             <li><a href="#"><i class="icon-twitter"></i></a></li>
             <li><a href="#"><i class="icon-facebook"></i></a></li>
             <li><a href="#"><i class="icon-instagram"></i></a></li>
+            <a href="/mailBox" id="mes" class="glyphicon glyphicon-envelope"></a>
         </ul>
     </div>
 
@@ -121,7 +122,6 @@
                             <p>Part Advertises: {{user.partAds.length}}</p>
                             <p>Comments: {{user.comments.length}}</p>
                             <p>Role: {{userRole}}</p>
-                            <p>State: {{userRole}}</p>
                             {{!-- <p>Price: {{car.price}}</p>
                             <p>Distance: {{car.distanceTraveled}}km</p>
                             <p>Transmission: {{car.transmission}}</p>
@@ -133,12 +133,21 @@
                     </div>
                 </div>
 
+                {{#if user.isActive}}
+                    <a id="banUserProfile" href="/banUser/{{user._id}}" style="float: right"
+                       class="btn btn-warning">Ban</a>
+                {{else}}
+                    <a id="banUserProfile" href="/banUser/{{user._id}}" style="float: right" class="btn btn-warning">Remove
+                        Ban</a>
+                {{/if}}
 
-                <a id="banUserProfile" href="/banUser/{{user._id}}" style="float: right" class="btn btn-warning">Ban</a>
-
-
-                <a id="changePermission" href="/changePermissionUser/{{user._id}}" style="float: right"
-                   class="btn btn-info">Change Permission</a>
+                {{#if user.userIsAdmin}}
+                    <a id="changePermission" href="/changePermissionUser/{{user._id}}" style="float: right"
+                       class="btn btn-info">Make User</a>
+                {{else}}
+                    <a id="changePermission" href="/changePermissionUser/{{user._id}}" style="float: right"
+                       class="btn btn-info">Make Admin</a>
+                {{/if}}
 
                 <a id="delMessage" href="/deleteUser/{{user._id}}" style="float: right"
                    class="btn btn-danger">Delete</a>

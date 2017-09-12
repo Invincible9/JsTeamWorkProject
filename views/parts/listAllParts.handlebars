@@ -10,6 +10,8 @@
     <script src="/js/jquery.waypoints.min.js"></script>
     <!-- Main JS -->
     <script src="/js/main.js"></script>
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
 </header>
 
 <body>
@@ -28,6 +30,7 @@
             <li><a href="#"><i class="icon-twitter"></i></a></li>
             <li><a href="#"><i class="icon-facebook"></i></a></li>
             <li><a href="#"><i class="icon-instagram"></i></a></li>
+            <a href="/mailBox" id="mes" class="glyphicon glyphicon-envelope"></a>
         </ul>
     </div>
 
@@ -92,7 +95,7 @@
                     {{else if ../isAdmin}}
                         <a class="btn btn-success" href="/editPart/{{_id}}">EDIT</a>
                         <a class="btn btn-primary" href="/parts/{{_id}}">DETAILS</a>
-                        <button class="btn btn-danger delete-link" id="{{_id}}">DELETE<button>
+                        <button class="btn btn-danger delete-link" id="{{_id}}">DELETE</button>
                     {{else}}
                         <a class="btn btn-primary" href="/parts/{{_id}}">DETAILS</a>
                     {{/if}}

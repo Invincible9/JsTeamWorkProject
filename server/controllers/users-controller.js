@@ -80,6 +80,12 @@ module.exports = {
                 return;
             }
 
+            if (user.isActive === false) {
+                let errorMessage = 'You have banned to use this site for 1 day';
+                res.render('users/login', {errorMessage: errorMessage});
+                return;
+            }
+
             req.logIn(user, (err, user) => {
                 if (err) {
                     let errorMessage = err;
@@ -209,7 +215,7 @@ module.exports = {
                         .findByIdAndRemove(userCarAd)
                         .then(car => {
 
-                            let carImagePath = `./public/images/CarPictures/${carId}`;
+                            let carImagePath = `./public/images/CarPictures/${car._id}`;
 
                             fs.unlinkSync(carImagePath, err => {
                                 if (err) {
@@ -221,6 +227,14 @@ module.exports = {
                                 Part
                                     .findByIdAndRemove(userPartAd)
                                     .then(part => {
+
+                                        let partImagePath = `./public/images/partPictures/${part._id}`;
+
+                                        fs.unlinkSync(partImagePath, err => {
+                                            if (err) {
+                                                console.log(err.message);
+                                            }
+                                        });
 
                                         for (let userComment of user.comments) {
                                             Comment
