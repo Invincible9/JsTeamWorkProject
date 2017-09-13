@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Part = mongoose.model('Part');
 const User = mongoose.model('User');
+const Message = mongoose.model('Message');
 const fs = require('fs');
 
 module.exports = {
@@ -78,11 +79,33 @@ module.exports = {
                             part.rightToChangePost = rightToChangePost
                         }
                     }
+
+
+                    User
+                    .findById(res.locals.currentUser.id)
+                    .then(user => {
+                        Message
+                          .find({'recipient': res.locals.currentUser.id})
+                          .then(allReceivedMessages => {
+                              res.render('parts/listAllParts', {
+                                parts: parts,
+                                user: user,
+                                messages: allReceivedMessages,
+                                hasMails: allReceivedMessages.length > 0
+                              })
+            
+                          })
+            
+                    })
+
+
+                }else{
+
+                    res.render('parts/listAllParts', {
+                        parts: parts
+                    })
                 }
 
-                res.render('parts/listAllParts', {
-                    parts: parts
-                })
             })
     },
 
