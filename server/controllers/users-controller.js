@@ -3,6 +3,7 @@ const User = require('mongoose').model('User')
 const Car = require('mongoose').model('Car')
 const Part = require('mongoose').model('Part')
 const Comment = require('mongoose').model('Comment')
+const Message = require('mongoose').model('Message')
 const errorHandler = require('../utilities/error-handler')
 const fs = require('fs')
 
@@ -111,7 +112,18 @@ module.exports = {
             .populate('partAds')
             .populate('comments')
             .then(user => {
-                res.render('users/profile', {user: user});
+
+                Message
+                    .find({'recipient': userId})
+                    .then(allReceivedMessages => {
+                        res.render('users/profile', {
+                            user: user,
+                            messages: allReceivedMessages,
+                            hasMails: allReceivedMessages.length > 0
+
+                    })
+                })        
+
             }).catch(next);
         // let userName = req.params.username
         // let id = req.user.id
@@ -165,9 +177,17 @@ module.exports = {
         User
             .findById(userId)
             .then(user => {
-                res.render('users/settings', {
-                    user: user
-                })
+                Message
+                    .find({'recipient': userId})
+                    .then(allReceivedMessages => {
+                        res.render('users/settings', {
+                            user: user,
+                            messages: allReceivedMessages,
+                            hasMails: allReceivedMessages.length > 0
+                        })
+
+                    })
+
             })
     },
 

@@ -32,7 +32,13 @@
             <li><a href="#"><i class="icon-twitter"></i></a></li>
             <li><a href="#"><i class="icon-facebook"></i></a></li>
             <li><a href="#"><i class="icon-instagram"></i></a></li>
-            <a href="/mailBox" id="mes" class="glyphicon glyphicon-envelope"></a>
+          
+        {{#if hasMails}}
+                <a href="/mailBox" id="mes" class="glyphicon glyphicon-envelope">({{messages.length}})</a>
+                {{else}}
+                <a href="/mailBox" id="mes" class="glyphicon glyphicon-envelope"></a>
+            {{/if}}
+
         </ul>
     </div>
 

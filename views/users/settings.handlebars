@@ -19,8 +19,8 @@
     <a href="#" class="fh5co-close-offcanvas js-fh5co-close-offcanvas"><span><i
             class="icon-cross3"></i> <span>Close</span></span></a>
     <div class="fh5co-bio">
-        <figure>
-            <a href="/cars/{{_id}}"><img src="/images/CarPictures/{{_id}}" alt="{{car.model}}"
+          <figure>
+            <a href="/users/prifile/{{user._id}}"><img src="/images/UsersProfilesPictures/{{user._id}}" alt="{{car.model}}"
                                          class="img-responsive"></a>
         </figure>
         <h3 class="heading">About Me</h3>
@@ -31,7 +31,11 @@
             <li><a href="#"><i class="icon-twitter"></i></a></li>
             <li><a href="#"><i class="icon-facebook"></i></a></li>
             <li><a href="#"><i class="icon-instagram"></i></a></li>
-            <a href="/mailBox" id="mes" class="glyphicon glyphicon-envelope"></a>
+            {{#if hasMails}}
+                <a href="/mailBox" id="mes" class="glyphicon glyphicon-envelope">({{messages.length}})</a>
+                {{else}}
+                <a href="/mailBox" id="mes" class="glyphicon glyphicon-envelope"></a>
+            {{/if}}
         </ul>
     </div>
 
