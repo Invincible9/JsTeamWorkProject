@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Car = mongoose.model('Car');
+const User = mongoose.model('User')
+const Message = mongoose.model('Message')
 
 module.exports = {
   index: (req, res) => {
@@ -29,11 +31,30 @@ module.exports = {
           }
         }
 
+        User
+          .findById(res.locals.currentUser.id)
+          .then(user => {
+              Message
+                .find({'recipient': res.locals.currentUser.id})
+                .then(allReceivedMessages => {
+                    res.render('home/index', {
+                      cars: cars,
+                      user: user,
+                      messages: allReceivedMessages,
+                      hasMails: allReceivedMessages.length > 0
+                    })
+  
+                })
+  
+          })
+      }else{
+
+        res.render('home/index', {
+            cars: cars
+        })
       }
 
-      res.render('home/index', {
-        cars: cars
-      })
+
 
     })  
 
