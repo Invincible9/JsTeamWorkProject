@@ -145,11 +145,22 @@
                         <blockquote>
                             {{#each part.comments}}
                                 <p class="CommentID" id="{{_id}}">&ldquo;{{this.comment}}&rdquo;
+
+                             {{#if this.rightToEditPost}}
                                     <a class="spanTrash" style="float: right" href="/deletePartCommentByAuthor/{{_id}}"><span
                                             class="glyphicon glyphicon-trash"></span></a>
                                     <a class="spanPencil" style="float: right"
                                        href="/editPartCommentByAuthor/{{_id}}"><span
                                             class="glyphicon glyphicon-pencil"></span></a>
+                                    {{else if ../isAdmin}}
+                                    <p class="CommentID" id="{{_id}}">&ldquo;{{this.comment}}&rdquo;
+                                    <a class="spanTrash" style="float: right" href="/deletePartCommentByAuthor/{{_id}}"><span
+                                            class="glyphicon glyphicon-trash"></span></a>
+                                    <a class="spanPencil" style="float: right"
+                                       href="/editPartCommentByAuthor/{{_id}}"><span
+                                            class="glyphicon glyphicon-pencil"></span></a>
+
+                            {{/if}}                
 
                                     <cite>&mdash; {{this.name}}</cite>
 
@@ -164,7 +175,10 @@
 
 
                 <button class="btn btn-success" id="btnForm">Add Comment</button>
-                <button class="btn btn-info" id="btnMessage">Add Message</button>
+
+                {{#if part.isNotAuthorOfAd}}
+                    <button class="btn btn-info" id="btnMessage">Add Message</button>
+                {{/if}}    
 
                 <div class="row rp-b">
                     <div class="col-lg-12 col-md-12 animate-box" id="commentForm">
