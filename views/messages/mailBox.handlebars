@@ -17,14 +17,20 @@
 <div class="row rp-b">
     <div class="col-md-12 animate-box fadeInUp animated">
 
-            {{#each mails}}
-                    <cite>&mdash; {{this.sender.username}}</cite>
-                        <a href="/messageDetail/{{this._id}}" style="float: right" class="btn btn-default">Details</a>
-                    <hr />
+        {{#each mails}}
+            {{#if isReaded}}
+                <cite>&mdash; {{this.sender.username}} <span style="color: green"><strong>- readed</strong></span></cite>
+                <a href="/messageDetail/{{this._id}}" style="float: right" class="btn btn-default">Details</a>
+                <hr/>
+            {{else}}
+                <cite>&mdash; {{this.sender.username}} <span style="color: red"><strong>- unread</strong></span></cite>
+                <a href="/messageDetail/{{this._id}}" style="float: right" class="btn btn-default">Details</a>
+                <hr/>
+            {{/if}}
 
-                </p>
+            </p>
 
-            {{/each}}
+        {{/each}}
 
     </div>
 </div>

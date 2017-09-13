@@ -8,7 +8,16 @@ module.exports = {
         Message.find({'recipient': res.locals.currentUser.id})
             .populate('sender')
             .then(mails => {
-                // console.log(mails);
+
+                // let isReadOrNot = '';
+                for (let message of mails) {
+                    if(message.isReaded === true){
+                       message.isReadOrNot = "readed";
+                    }else{
+                        message.isReadOrNot = 'unread';
+                    }
+                }
+
                 res.render('messages/mailBox',
                     {
                         mails: mails
@@ -21,6 +30,9 @@ module.exports = {
         let id = req.params.id;
 
         Message.findById(id).then(message => {
+            message.isReaded = true;
+            message.save();
+
             res.render('messages/messageDetail',
                 {
                     message: message
@@ -40,6 +52,7 @@ module.exports = {
             sender: senderId,
             recipient: recipientId,
             message: userMessage,
+            isReaded: false,
             date: Date.now(),
         }).then(
             res.redirect(`/messageDetail/${messageID}`)
@@ -66,6 +79,7 @@ module.exports = {
             sender: senderMessage,
             recipient: recipientMessage,
             message: userMessage,
+            isReaded: false,
             date: Date.now(),
         }).then(
             res.redirect(`/cars/${carID}`)
@@ -84,6 +98,7 @@ module.exports = {
             sender: senderMessage,
             recipient: recipientMessage,
             message: userMessage,
+            isReaded: false,
             date: Date.now(),
         }).then(
             res.redirect(`/parts/${partID}`)

@@ -114,7 +114,7 @@ module.exports = {
             .then(user => {
 
                 Message
-                    .find({'recipient': userId})
+                    .find({'recipient': userId, 'isReaded': false})
                     .then(allReceivedMessages => {
                         res.render('users/profile', {
                             user: user,

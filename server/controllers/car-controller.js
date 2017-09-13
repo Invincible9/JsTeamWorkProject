@@ -65,7 +65,6 @@ module.exports = {
     getCarById: (req, res, next) => {
         let carId = req.params.id;
         let authorId = res.locals.currentUser.id;
-        
 
         Car.findById(carId)
             .populate('comments')
@@ -73,24 +72,18 @@ module.exports = {
             .then(car => {
 
                 let voteUp = true;
-                let rightToEditPost = false
-                let isNotAuthorOfAd = true
+                let rightToEditPost = false;
+                let isNotAuthorOfAd = true;
 
                 for(let comment of car.comments){
-                  
                     if(comment.author == authorId){
-                        rightToEditPost = true
+                        rightToEditPost = true;
 
                         comment.rightToEditPost = rightToEditPost
-                        // break
                     }else{
-
-                        rightToEditPost = false
+                        rightToEditPost = false;
                         comment.rightToEditPost = rightToEditPost
                     }
-
-
-
                 }
 
                 for (let id of car.likes) {
@@ -108,19 +101,19 @@ module.exports = {
                     isNotAuthorOfAd = false
                 }
                 
-                car.isNotAuthorOfAd = isNotAuthorOfAd
+                car.isNotAuthorOfAd = isNotAuthorOfAd;
 
                 let countView = car.views;
                 car.views = ++countView;
                 car.save();
 
-
                 User
                     .findById(authorId)
                     .then(user => {
                         Message
-                            .find({'recipient': authorId})
+                            .find({'recipient': authorId, 'isReaded': false})
                             .then(allReceivedMessages => {
+
                                 res.render('cars/carDetail',
                                     {
                                         car: car,
@@ -128,13 +121,8 @@ module.exports = {
                                         messages: allReceivedMessages,
                                         hasMails: allReceivedMessages.length > 0
                                     });
-        
                             })
-
                     })
-
-
-            
 
             }).catch(next);
     },
@@ -149,8 +137,8 @@ module.exports = {
     },
 
     editCarByIdPOST: (req, res) => {
-        let carId = req.params.id
-        let reqBody = req.body
+        let carId = req.params.id;
+        let reqBody = req.body;
 
         let picture = req.files.pictureUrl;
 
@@ -192,7 +180,7 @@ module.exports = {
             car.author = adAuthorUpdated,
             car.description = carDescriptionUpdated
 
-            car.save()
+            car.save();
 
             res.redirect('/')
         });

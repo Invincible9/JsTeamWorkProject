@@ -16,7 +16,7 @@ module.exports = {
          currentUser = res.locals.currentUser.id
       }
 
-      if(currentUser != '' && currentUser != null && currentUser != ' ' && currentUser != undefined && currentUser != "" && currentUser != " "){
+      if(currentUser != '' && currentUser != null && currentUser != ' ' && currentUser != undefined){
         let rightToChangePost = false
       
   
@@ -35,7 +35,7 @@ module.exports = {
           .findById(res.locals.currentUser.id)
           .then(user => {
               Message
-                .find({'recipient': res.locals.currentUser.id})
+                .find({'recipient': res.locals.currentUser.id, 'isReaded': false})
                 .then(allReceivedMessages => {
                     res.render('home/index', {
                       cars: cars,
