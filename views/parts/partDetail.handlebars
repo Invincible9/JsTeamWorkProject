@@ -126,6 +126,7 @@
                             <p>Price: {{part.price}}</p>
                             <p>Availability: {{part.availability}}</p>
                             <p>Location: {{part.location}}</p>
+                            <p>Author: {{part.author.username}}</p>
                             <p>Views: {{part.views}}</p>
                             <p>Likes: {{part.likes.length}}</p>
                         </div>
@@ -153,7 +154,7 @@
                                        href="/editPartCommentByAuthor/{{_id}}"><span
                                             class="glyphicon glyphicon-pencil"></span></a>
                                     {{else if ../isAdmin}}
-                                    <p class="CommentID" id="{{_id}}">&ldquo;{{this.comment}}&rdquo;
+                                  
                                     <a class="spanTrash" style="float: right" href="/deletePartCommentByAuthor/{{_id}}"><span
                                             class="glyphicon glyphicon-trash"></span></a>
                                     <a class="spanPencil" style="float: right"
