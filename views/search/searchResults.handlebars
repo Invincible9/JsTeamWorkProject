@@ -83,7 +83,7 @@
         {{#each cars}}
             <article class="col-lg-3 col-md-3 col-sm-3 col-xs-6 col-xxs-12 animate-box">
                 <figure>
-                    <img src="/images/CarPictures/{{_id}}" alt="{{model}}" class="img-responsive">
+                    <a href="/cars/{{_id}}"><img src="/images/CarPictures/{{_id}}" alt="{{model}}" class="img-responsive"></a>
                 </figure>
                 <span class="fh5co-meta"><a href="/cars/{{_id}}">{{location}}</a></span>
                 <h2 class="fh5co-article-title"><a href="/cars/{{_id}}">{{model}}  {{price}}$ </a></h2>

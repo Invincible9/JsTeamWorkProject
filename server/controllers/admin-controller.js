@@ -145,8 +145,4 @@ module.exports = {
             res.redirect('/users/listAllUsers');
         });
     }
-
-
-
-
 };
