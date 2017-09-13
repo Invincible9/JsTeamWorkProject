@@ -160,9 +160,26 @@ module.exports = {
                 part.views = ++countView;
                 part.save();
 
-                res.render('parts/partDetail', {
-                    part:part
-                })
+
+                User
+                    .findById(authorId)
+                    .then(user => {
+
+                        Message
+                            .find({'recipient': authorId})
+                            .then(allReceivedMessages => {
+                                res.render('parts/partDetail', {
+                                    part:part,
+                                    user: user,
+                                    messages: allReceivedMessages,
+                                    hasMails: allReceivedMessages.length > 0
+                                })
+
+                            })
+
+                    })
+
+
             }).catch(next)
     },
 

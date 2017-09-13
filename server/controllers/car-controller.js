@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Car = mongoose.model('Car')
 const User = mongoose.model('User')
+const Message = mongoose.model('Message')
 const fs = require('fs');
 
 module.exports = {
@@ -113,12 +114,28 @@ module.exports = {
                 car.views = ++countView;
                 car.save();
 
+
+                User
+                    .findById(authorId)
+                    .then(user => {
+                        Message
+                            .find({'recipient': authorId})
+                            .then(allReceivedMessages => {
+                                res.render('cars/carDetail',
+                                    {
+                                        car: car,
+                                        user: user,
+                                        messages: allReceivedMessages,
+                                        hasMails: allReceivedMessages.length > 0
+                                    });
+        
+                            })
+
+                    })
+
+
             
 
-                res.render('cars/carDetail',
-                    {
-                        car: car,
-                    });
             }).catch(next);
     },
 
