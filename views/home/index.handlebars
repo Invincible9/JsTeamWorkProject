@@ -19,7 +19,7 @@
             class="icon-cross3"></i> <span>Close</span></span></a>
     <div class="fh5co-bio">
         <figure>
-            <a href="/users/prifile/{{user._id}}"><img src="/images/UsersProfilesPictures/{{user._id}}" alt="{{user.username}}"
+            <a href="/users/profile/{{user._id}}"><img src="/images/UsersProfilesPictures/{{user._id}}" alt="{{user.username}}"
                                          class="img-responsive"></a>
         </figure>
         <h3 class="heading">About Me</h3>
@@ -153,7 +153,7 @@
 
             $('#deleteForm').empty();
             let hrefAddress = `/deleteCar/${str}`;
-            let href = $(`<a href="/parts" class="btn btn-default" style="margin-right: 15px">Cancel</a>
+            let href = $(`<a href="/" class="btn btn-default" style="margin-right: 15px">Cancel</a>
                   <a href="${hrefAddress}"><input class="btn btn-danger delete-btn-confirm" value="Delete" /></a>`);
             $('#deleteForm').append(href);
         });

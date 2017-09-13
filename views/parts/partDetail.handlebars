@@ -18,9 +18,10 @@
     <a href="#" class="fh5co-close-offcanvas js-fh5co-close-offcanvas"><span><i
             class="icon-cross3"></i> <span>Close</span></span></a>
     <div class="fh5co-bio">
-          <figure>
-            <a href="/users/prifile/{{user._id}}"><img src="/images/UsersProfilesPictures/{{user._id}}" alt="{{car.model}}"
-                                         class="img-responsive"></a>
+        <figure>
+            <a href="/users/profile/{{user._id}}"><img src="/images/UsersProfilesPictures/{{user._id}}"
+                                                       alt="{{car.model}}"
+                                                       class="img-responsive"></a>
         </figure>
         <h3 class="heading">About Me</h3>
         <h2>{{user.username}}</h2>
@@ -30,10 +31,10 @@
             <li><a href="#"><i class="icon-twitter"></i></a></li>
             <li><a href="#"><i class="icon-facebook"></i></a></li>
             <li><a href="#"><i class="icon-instagram"></i></a></li>
-           
-             {{#if hasMails}}
+
+            {{#if hasMails}}
                 <a href="/mailBox" id="mes" class="glyphicon glyphicon-envelope">({{messages.length}})</a>
-                {{else}}
+            {{else}}
                 <a href="/mailBox" id="mes" class="glyphicon glyphicon-envelope"></a>
             {{/if}}
         </ul>
@@ -153,28 +154,30 @@
                             {{#each part.comments}}
                                 <p class="CommentID" id="{{_id}}">&ldquo;{{this.comment}}&rdquo;
 
-                             {{#if this.rightToEditPost}}
-                                    <a class="spanTrash" style="float: right" href="/deletePartCommentByAuthor/{{_id}}"><span
-                                            class="glyphicon glyphicon-trash"></span></a>
-                                    <a class="spanPencil" style="float: right"
-                                       href="/editPartCommentByAuthor/{{_id}}"><span
-                                            class="glyphicon glyphicon-pencil"></span></a>
+                                    {{#if this.rightToEditPost}}
+                                        <a class="spanTrash" style="float: right"
+                                           href="/deletePartCommentByAuthor/{{_id}}"><span
+                                                class="glyphicon glyphicon-trash"></span></a>
+                                        <a class="spanPencil" style="float: right"
+                                           href="/editPartCommentByAuthor/{{_id}}"><span
+                                                class="glyphicon glyphicon-pencil"></span></a>
                                     {{else if ../isAdmin}}
-                                  
-                                    <a class="spanTrash" style="float: right" href="/deletePartCommentByAuthor/{{_id}}"><span
-                                            class="glyphicon glyphicon-trash"></span></a>
-                                    <a class="spanPencil" style="float: right"
-                                       href="/editPartCommentByAuthor/{{_id}}"><span
-                                            class="glyphicon glyphicon-pencil"></span></a>
 
-                            {{/if}}                
+                                        <a class="spanTrash" style="float: right"
+                                           href="/deletePartCommentByAuthor/{{_id}}"><span
+                                                class="glyphicon glyphicon-trash"></span></a>
+                                        <a class="spanPencil" style="float: right"
+                                           href="/editPartCommentByAuthor/{{_id}}"><span
+                                                class="glyphicon glyphicon-pencil"></span></a>
+
+                                    {{/if}}
 
                                     <cite>&mdash; {{this.name}}</cite>
 
                                     <input type="hidden" value="{{this.comment}}" class="valueComment">
                                     <input type="hidden" value="{{_id}}" class="commentID">
 
-                                </>
+                                </p>
                             {{/each}}
                         </blockquote>
                     </div>
@@ -184,8 +187,11 @@
                 <button class="btn btn-success" id="btnForm">Add Comment</button>
 
                 {{#if part.isNotAuthorOfAd}}
-                    <button class="btn btn-info" id="btnMessage">Add Message</button>
-                {{/if}}    
+                    {{#if ../isAdmin}}
+                    {{else}}
+                        <button class="btn btn-info" id="btnMessage">Add Message</button>
+                    {{/if}}
+                {{/if}}
 
                 <div class="row rp-b">
                     <div class="col-lg-12 col-md-12 animate-box" id="commentForm">
