@@ -95,32 +95,43 @@ module.exports = {
             .populate('comments')
             .then(part => {
 
-                let currentUser = '';
-
-                if (res.locals.currentUser) {
-                    currentUser = res.locals.currentUser.id
-                }
-
-                let rightToChangePost = false;
-
-                if (part.author == currentUser) {
-                    rightToChangePost = true;
-                    part.rightToChangePostMessage = rightToChangePost
-                } else {
-                    rightToChangePost = false;
-                    part.rightToChangePostMessage = rightToChangePost
-                }
-
                 let voteUp = true;
+                let rightToEditPost = false
+                let isNotAuthorOfAd = true
 
-                for(let id of part.likes){
-                    if(id == authorId){
+                for(let comment of part.comments){
+                  
+                    if(comment.author == authorId){
+                        rightToEditPost = true
+
+                        comment.rightToEditPost = rightToEditPost
+                        // break
+                    }else{
+
+                        rightToEditPost = false
+                        comment.rightToEditPost = rightToEditPost
+                    }
+
+
+
+                }
+
+                for (let id of part.likes) {
+                    if (id == authorId) {
                         voteUp = false;
                         break;
                     }
                 }
 
                 part.rightToVoteUp = voteUp;
+
+                if(part.author.username != res.locals.currentUser.username){
+                    isNotAuthorOfAd = true
+                }else{
+                    isNotAuthorOfAd = false
+                }
+                
+                part.isNotAuthorOfAd = isNotAuthorOfAd
 
                 let countView = part.views;
                 part.views = ++countView;
